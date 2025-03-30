@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Site{% endblock %}</title>
+    
+    {% load static tailwind_tags %}
+    {% tailwind_css %}
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <nav class="bg-gray-800">
+        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div class="relative flex h-16 items-center justify-between">
+                <!-- Logo -->
+                <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                    <div class="flex shrink-0 items-center">
+                        <img class="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Logo">
+                    </div>
+                </div>
+                <!-- Hamburger Menu for mobile -->
+                <div class="absolute inset-y-0 right-0 flex items-center sm:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+                <!-- Desktop Links -->
+                <div class="hidden sm:block sm:ml-6">
+                    <div class="flex space-x-4">
+                        <a href="{% url 'home' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Home</a>
+                        
+                        <!-- Profile dropdown for authenticated users -->
+                        {% if request.user.is_authenticated %}
+                            <div class="relative">
+                                <button type="button" id="profile-menu-button" class="flex items-center space-x-2 py-2 px-4 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                                    <!-- Profile Icon -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                    </svg>                                    
+                                </button>
+                                
+                                <!-- Dropdown menu, initially hidden -->
+                                <div id="profile-menu" class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 hidden">
+                                    <div class="py-1">
+                                        <a href="{% url 'profile' %}" class="text-gray-300 block px-4 py-2 text-sm">Profile</a>
+                                        <form action="{% url 'logout' %}" method="post" class="inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="text-gray-300 block px-4 py-2 text-sm">Logout</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <a href="{% url 'register' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Register</a>
+                            <a href="{% url 'login' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Login</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="sm:hidden" id="mobile-menu" class="hidden">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+            <a href="{% url 'home' %}" class="text-gray-500 block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700 hover:text-white">Home</a>
+            {% if not request.user.is_authenticated %}
+                <a href="{% url 'register' %}" class="text-gray-500 block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700 hover:text-white">Register</a>
+                <a href="{% url 'login' %}" class="text-gray-500 block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700 hover:text-white">Login</a>
+            {% else %}
+                <a href="{% url 'profile' %}" class="text-gray-500 block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700 hover:text-white">Profile</a>
+                <form action="{% url 'logout' %}" method="post" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" class="text-gray-500 block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700 hover:text-white">Logout</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <main class="p-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="bg-blue-500 text-white p-4 text-center">
+        <p>&copy; 2025 My Site</p>
+    </footer>
+    
+    <script>
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        // Toggle mobile menu visibility
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        const profileButton = document.getElementById('profile-menu-button');
+        const profileMenu = document.getElementById('profile-menu');
+
+        // Toggle profile dropdown visibility on desktop
+        profileButton.addEventListener('click', () => {
+            profileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
