@@ -44,14 +44,36 @@ def user_login(request):
 
 
 
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib import messages
+from datetime import datetime
+from .models import Profile  # Importáld a Profile modellt
+
 @login_required
 def edit_profile(request):
     profile = get_object_or_404(Profile, user=request.user)
+    
     if request.method == 'POST':
-        # Profile adatainak frissítése
         profile.bio = request.POST.get('bio', profile.bio)
         profile.location = request.POST.get('location', profile.location)
-        profile.birth_date = request.POST.get('birth_date', profile.birth_date)
+
+        # Ellenőrizzük, hogy a dátum megfelelő formátumú-e
+        birth_date = request.POST.get('birth_date', None)
+        if birth_date:
+            try:
+                profile.birth_date = datetime.strptime(birth_date, "%Y-%m-%d").date()
+            except ValueError:
+                messages.error(request, "Érvénytelen dátumformátum! Használj ÉÉÉÉ-HH-NN formátumot.")
+                return redirect('profile')
+        else:
+            profile.birth_date = None  # Ha üres, akkor legyen None
+
+        if 'profile_picture' in request.FILES:  # Ellenőrizzük, hogy lett-e kép feltöltve
+            profile.profile_picture = request.FILES['profile_picture']
+
         profile.save()
 
         # Jelszó módosítása
@@ -59,7 +81,7 @@ def edit_profile(request):
         if 'old_password' in request.POST and 'new_password1' in request.POST and 'new_password2' in request.POST:
             if password_form.is_valid():
                 user = password_form.save()
-                update_session_auth_hash(request, user)  # Ne törlődjön a bejelentkezett felhasználó session-ja
+                update_session_auth_hash(request, user)  # Ne léptesse ki a felhasználót
                 messages.success(request, 'Password updated successfully')
                 return redirect('profile')
             else:
@@ -69,6 +91,7 @@ def edit_profile(request):
         password_form = PasswordChangeForm(user=request.user)
 
     return render(request, 'profile/profile.html', {'profile': profile, 'password_form': password_form})
+
 
 
 @login_required
