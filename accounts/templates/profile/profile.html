@@ -7,12 +7,19 @@
         <div class="profile-container">
             <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="w-24 h-24 rounded-full">
             <h2 class="text-xl font-bold">{{ profile.user.username }}</h2>
+            <p class="text-gray-600">Bio:{{ profile.bio }}</p>
+            <p class="text-gray-600">Location: {{ profile.location }}</p>
+            <p class="text-gray-600">Birth Date: {{ profile.birth_date|date:"Y F j" }}</p>
+            <p class="text-gray-600">Joined: {{ profile.user.date_joined|date:"Y F j" }}</p>
+            <p class="text-gray-600">Last Updated: {{ profile.updated_at|date:"F j, Y" }}</p>
+            <p class="text-gray-600">Email: {{ user.email }}</p>
         </div>
         
 
-        <!-- Profile Edit Form -->
-        <form method="post" enctype=multipart/form-data"" class="mt-6 space-y-6 bg-white p-6 rounded-lg shadow-lg" id="profile-form">
+        <!-- Profile Edit Form (initially hidden) -->
+        <form method="post" enctype="multipart/form-data" class="mt-6 space-y-6 bg-white p-6 rounded-lg shadow-lg hidden" id="profile-form">
             {% csrf_token %}
+            {{ form.as_p }}
             <div>
                 <label for="profile_picture" class="block text-sm font-medium text-gray-700">Profile Picture:</label>
                 <input type="file" name="profile_picture" id="profile_picture" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
@@ -31,7 +38,11 @@
                     {% if profile.birth_date %} value="{{ profile.birth_date|date:'Y-m-d' }}" {% endif %}
                     class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
             </div>
-            
+            <div>
+                <label for="email">Email cím:</label>
+                <input type="email" name="email" value="{{ user.email }}" class="form-input">
+            </div>
+
             <button type="submit" class="w-full py-2 mt-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400" id="save-btn" disabled>Save Changes</button>
         </form>
 
@@ -39,6 +50,9 @@
         <button type="button" id="edit-btn" class="mt-4 w-full py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400">
             Edit Profile
         </button>
+
+
+
 
         <!-- Change Password Button -->
         <button id="change-password-button" type="button" class="w-full py-2 mt-4 bg-gray-800 text-white rounded-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500">
@@ -73,29 +87,46 @@
     <!--Profil szerkesztése-->
     <script>
         document.getElementById('edit-btn').addEventListener('click', function() {
-            // Enable the input fields
-            document.getElementById('bio').removeAttribute('readonly');
-            document.getElementById('location').removeAttribute('readonly');
-            document.getElementById('birth_date').removeAttribute('readonly');
-            
-            // Enable the save button
-            document.getElementById('save-btn').disabled = false;
+            const profileForm = document.getElementById('profile-form');
+            const isEditing = profileForm.classList.contains('hidden');
 
-            // Change the edit button to "Cancel"
-            this.textContent = 'Cancel Edit';
-            this.classList.remove('bg-gray-500');
-            this.classList.add('bg-red-500');
+            if (isEditing) {
+                // Show the profile form and enable editing
+                profileForm.classList.remove('hidden');
+                document.getElementById('bio').removeAttribute('readonly');
+                document.getElementById('location').removeAttribute('readonly');
+                document.getElementById('birth_date').removeAttribute('readonly');
+                document.getElementById('save-btn').disabled = false;
+
+                // Change the edit button to "Cancel"
+                this.textContent = 'Cancel Edit';
+                this.classList.remove('bg-gray-500');
+                this.classList.add('bg-red-500');
+            } else {
+                // Hide the profile form and disable editing
+                profileForm.classList.add('hidden');
+                document.getElementById('bio').setAttribute('readonly', true);
+                document.getElementById('location').setAttribute('readonly', true);
+                document.getElementById('birth_date').setAttribute('readonly', true);
+                document.getElementById('save-btn').disabled = true;
+
+                // Reset the edit button
+                this.textContent = 'Edit Profile';
+                this.classList.remove('bg-red-500');
+                this.classList.add('bg-gray-500');
+            }
         });
 
-        // Optionally, if you want to disable editing again
-        document.getElementById('edit-btn').addEventListener('dblclick', function() {
-            document.getElementById('bio').setAttribute('readonly', true);
-            document.getElementById('location').setAttribute('readonly', true);
-            document.getElementById('birth_date').setAttribute('readonly', true);
-            document.getElementById('save-btn').disabled = true;
-            this.textContent = 'Edit Profile';
-            this.classList.remove('bg-red-500');
-            this.classList.add('bg-gray-500');
+        // Hide the form after saving changes
+        document.getElementById('profile-form').addEventListener('submit', function() {
+            // Hide the form after submission
+            this.classList.add('hidden');
+
+            // Reset the edit button
+            const editBtn = document.getElementById('edit-btn');
+            editBtn.textContent = 'Edit Profile';
+            editBtn.classList.remove('bg-red-500');
+            editBtn.classList.add('bg-gray-500');
         });
     </script>
 

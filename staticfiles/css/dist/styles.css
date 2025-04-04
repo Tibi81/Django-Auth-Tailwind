@@ -749,40 +749,6 @@ select {
   outline: 1px auto -webkit-focus-ring-color;
 }
 
-.container {
-  width: 100%;
-}
-
-@media (min-width: 640px) {
-  .container {
-    max-width: 640px;
-  }
-}
-
-@media (min-width: 768px) {
-  .container {
-    max-width: 768px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container {
-    max-width: 1024px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container {
-    max-width: 1280px;
-  }
-}
-
-@media (min-width: 1536px) {
-  .container {
-    max-width: 1536px;
-  }
-}
-
 .sr-only {
   position: absolute;
   width: 1px;
@@ -878,6 +844,10 @@ select {
   height: 4rem;
 }
 
+.h-24 {
+  height: 6rem;
+}
+
 .h-6 {
   height: 1.5rem;
 }
@@ -886,8 +856,8 @@ select {
   height: 2rem;
 }
 
-.h-screen {
-  height: 100vh;
+.w-24 {
+  width: 6rem;
 }
 
 .w-48 {
@@ -972,6 +942,10 @@ select {
   margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
 }
 
+.rounded-full {
+  border-radius: 9999px;
+}
+
 .rounded-lg {
   border-radius: 0.5rem;
 }
@@ -999,9 +973,9 @@ select {
   background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
 }
 
-.bg-gray-50 {
+.bg-gray-500 {
   --tw-bg-opacity: 1;
-  background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity, 1));
 }
 
 .bg-gray-700 {
@@ -1078,10 +1052,6 @@ select {
   text-align: center;
 }
 
-.font-serif {
-  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-}
-
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
@@ -1090,11 +1060,6 @@ select {
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
-}
-
-.text-5xl {
-  font-size: 3rem;
-  line-height: 1;
 }
 
 .text-base {
@@ -1107,20 +1072,21 @@ select {
   line-height: 1.25rem;
 }
 
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
 .font-medium {
   font-weight: 500;
 }
 
 .font-semibold {
   font-weight: 600;
-}
-
-.leading-normal {
-  line-height: 1.5;
-}
-
-.tracking-normal {
-  letter-spacing: 0em;
 }
 
 .text-blue-500 {
@@ -1210,6 +1176,11 @@ select {
   background-color: rgb(37 99 235 / var(--tw-bg-opacity, 1));
 }
 
+.hover\:bg-gray-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity, 1));
+}
+
 .hover\:bg-gray-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity, 1));
@@ -1218,6 +1189,11 @@ select {
 .hover\:bg-gray-800:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-gray-900:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:bg-red-600:hover {
@@ -1248,6 +1224,11 @@ select {
 .focus\:ring-blue-400:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(96 165 250 / var(--tw-ring-opacity, 1));
+}
+
+.focus\:ring-gray-400:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(156 163 175 / var(--tw-ring-opacity, 1));
 }
 
 .focus\:ring-gray-500:focus {

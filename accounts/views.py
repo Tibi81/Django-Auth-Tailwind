@@ -9,22 +9,25 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 
 def home(request):
     return render(request, 'home.html')
+from .forms import CustomUserCreationForm
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             Profile.objects.create(user=user)
             login(request, user)
             return redirect('profile')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
+
 
 
 
@@ -52,45 +55,61 @@ from django.contrib import messages
 from datetime import datetime
 from .models import Profile  # Importáld a Profile modellt
 
+from datetime import datetime
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.models import User
+from .models import Profile
+
 @login_required
 def edit_profile(request):
     profile = get_object_or_404(Profile, user=request.user)
-    
+
     if request.method == 'POST':
         profile.bio = request.POST.get('bio', profile.bio)
         profile.location = request.POST.get('location', profile.location)
+        new_email = request.POST.get('email')
 
-        # Ellenőrizzük, hogy a dátum megfelelő formátumú-e
-        birth_date = request.POST.get('birth_date', None)
+        if new_email and new_email != request.user.email:
+            if User.objects.filter(email=new_email).exclude(pk=request.user.pk).exists():
+                messages.error(request, "Ez az email cím már más felhasználóhoz tartozik.")
+            else:
+                request.user.email = new_email
+                request.user.save()
+
+        birth_date = request.POST.get('birth_date', '')
         if birth_date:
             try:
                 profile.birth_date = datetime.strptime(birth_date, "%Y-%m-%d").date()
             except ValueError:
                 messages.error(request, "Érvénytelen dátumformátum! Használj ÉÉÉÉ-HH-NN formátumot.")
                 return redirect('profile')
-        else:
-            profile.birth_date = None  # Ha üres, akkor legyen None
 
-        if 'profile_picture' in request.FILES:  # Ellenőrizzük, hogy lett-e kép feltöltve
+        if 'profile_picture' in request.FILES:
             profile.profile_picture = request.FILES['profile_picture']
 
         profile.save()
 
-        # Jelszó módosítása
         password_form = PasswordChangeForm(user=request.user, data=request.POST)
         if 'old_password' in request.POST and 'new_password1' in request.POST and 'new_password2' in request.POST:
             if password_form.is_valid():
                 user = password_form.save()
-                update_session_auth_hash(request, user)  # Ne léptesse ki a felhasználót
-                messages.success(request, 'Password updated successfully')
+                update_session_auth_hash(request, user)
+                messages.success(request, 'Jelszó sikeresen frissítve.')
                 return redirect('profile')
             else:
-                messages.error(request, 'There was an error updating the password')
-
+                messages.error(request, 'Hiba történt a jelszó frissítése közben.')
     else:
         password_form = PasswordChangeForm(user=request.user)
 
-    return render(request, 'profile/profile.html', {'profile': profile, 'password_form': password_form})
+    return render(request, 'profile/profile.html', {
+        'profile': profile,
+        'password_form': password_form
+    })
+
 
 
 
