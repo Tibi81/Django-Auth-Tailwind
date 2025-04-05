@@ -347,12 +347,46 @@ button,
 input:where([type='button']),
 input:where([type='reset']),
 input:where([type='submit']) {
-  -webkit-appearance: button;
+  -webkit-appearance: none;
   /* 1 */
-  background-color: transparent;
+  background-color: #3182ce;
   /* 2 */
   background-image: none;
   /* 2 */
+  color: white; /* Fehér szöveg */
+  border: none; /* Nincs keret */
+  padding: 10px 20px; /* Párnázás */
+  border-radius: 0.375rem; /* Lekerekített sarkok */
+  font-weight: 600; /* Félkövér szöveg */
+  cursor: pointer; /* Mutatja, hogy kattintható */
+  transition: background-color 0.2s ease, transform 0.2s ease; /* Animáció a hover és a klikkeléskor */
+}
+
+/* Hover állapot */
+button:hover,
+input:where([type='button']):hover,
+input:where([type='reset']):hover,
+input:where([type='submit']):hover {
+  background-color: #2b6cb0; /* Sötétebb kék hover állapotban */
+  transform: scale(1.05); /* Enyhe zoom hatás hover során */
+}
+
+/* Focus állapot */
+button:focus,
+input:where([type='button']):focus,
+input:where([type='reset']):focus,
+input:where([type='submit']):focus {
+  outline: none; /* Eltávolítja az alapértelmezett fókusz körvonalat */
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5); /* Kék fókusz gyűrű */
+}
+
+/* Ha a gomb inaktív (disabled), akkor más háttérszín */
+button:disabled,
+input:where([type='button']):disabled,
+input:where([type='reset']):disabled,
+input:where([type='submit']):disabled {
+  background-color: #b3d9ff; /* Világoskék szín, ha inaktív */
+  cursor: not-allowed; /* Megjeleníti, hogy nem kattintható */
 }
 
 /*

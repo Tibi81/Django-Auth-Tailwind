@@ -1,15 +1,14 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from .models import Profile
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from datetime import datetime
+from django.contrib.auth import views as auth_views
+from django.urls import reverse_lazy
 
 
 def home(request):
@@ -23,10 +22,22 @@ def register(request):
             user = form.save()
             Profile.objects.create(user=user)
             login(request, user)
+
+            # Email küldése
+            send_mail(
+                subject='Sikeres regisztráció',
+                message=f'Kedves {user.username},\n\nSikeresen regisztráltál az oldalunkon!',
+                from_email='djangorendeles@gmail.com',
+                recipient_list=[user.email],
+                fail_silently=False,
+            )
+
             return redirect('profile')
+        messages.success(request, "Sikeresen regisztráltál!")
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
+    
 
 
 
@@ -47,22 +58,6 @@ def user_login(request):
 
 
 
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib import messages
-from datetime import datetime
-from .models import Profile  # Importáld a Profile modellt
-
-from datetime import datetime
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth import update_session_auth_hash
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.models import User
-from .models import Profile
 
 @login_required
 def edit_profile(request):
@@ -103,15 +98,16 @@ def edit_profile(request):
         return redirect('profile')  # Redirect to the profile page after successful update
 
 
-        password_form = PasswordChangeForm(user=request.user, data=request.POST)
-        if 'old_password' in request.POST and 'new_password1' in request.POST and 'new_password2' in request.POST:
-            if password_form.is_valid():
-                user = password_form.save()
-                update_session_auth_hash(request, user)
-                messages.success(request, 'Jelszó sikeresen frissítve.')
-                return redirect('profile')
-            else:
-                messages.error(request, 'Hiba történt a jelszó frissítése közben.')
+    password_form = PasswordChangeForm(user=request.user, data=request.POST)
+    if 'old_password' in request.POST and 'new_password1' in request.POST and 'new_password2' in request.POST:
+        if password_form.is_valid():
+            user = password_form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Jelszó sikeresen frissítve.')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Hiba történt a jelszó frissítése közben.')
+            
     else:
         password_form = PasswordChangeForm(user=request.user)
 
@@ -130,3 +126,16 @@ def delete_profile(request):
         user.delete()
         return redirect('home')  # Sikeres törlés után irányítsuk a főoldalra
     return render(request, 'profile/delete_profile.html')  # Külön törlési sablon
+
+class CustomPasswordResetView(auth_views.PasswordResetView):
+    template_name = 'password/password_reset_form.html'  # Az általad létrehozott sablon1
+
+class CustomPasswordResetDoneView(auth_views.PasswordResetDoneView):
+    template_name = 'password/password_reset_done.html'  # Az általad létrehozott sablon2
+
+class CustomPasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    template_name = 'password/password_reset_confirm.html'  # Az általad létrehozott sablon3
+    success_url = reverse_lazy('password_reset_complete')
+
+class CustomPasswordResetCompleteView(auth_views.PasswordResetCompleteView):
+    template_name = 'password/password_reset_complete.html'  # Az általad létrehozott sablon4
