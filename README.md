@@ -1,4 +1,4 @@
-<div style="position: relative; text-align: center;">
+<div style="position: relative; text-align: center; color: red;">
   <h1 >
     Fejlesztés alatt!
   </h1>
