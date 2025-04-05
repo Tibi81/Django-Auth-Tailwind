@@ -69,10 +69,17 @@ def edit_profile(request):
     profile = get_object_or_404(Profile, user=request.user)
 
     if request.method == 'POST':
+        # Update user fields
+        request.user.first_name = request.POST.get('first_name', request.user.first_name)
+        request.user.last_name = request.POST.get('last_name', request.user.last_name)
+        request.user.save()  # Save the user object to persist first_name and last_name changes
+
+        # Update profile fields
         profile.bio = request.POST.get('bio', profile.bio)
         profile.location = request.POST.get('location', profile.location)
-        new_email = request.POST.get('email')
+        profile.phone_number = request.POST.get('phone_number', profile.phone_number)
 
+        new_email = request.POST.get('email')
         if new_email and new_email != request.user.email:
             if User.objects.filter(email=new_email).exclude(pk=request.user.pk).exists():
                 messages.error(request, "Ez az email cím már más felhasználóhoz tartozik.")
@@ -91,7 +98,10 @@ def edit_profile(request):
         if 'profile_picture' in request.FILES:
             profile.profile_picture = request.FILES['profile_picture']
 
-        profile.save()
+        profile.save()  # Save the profile object to persist changes
+
+        return redirect('profile')  # Redirect to the profile page after successful update
+
 
         password_form = PasswordChangeForm(user=request.user, data=request.POST)
         if 'old_password' in request.POST and 'new_password1' in request.POST and 'new_password2' in request.POST:
