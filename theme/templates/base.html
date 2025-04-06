@@ -10,7 +10,7 @@
 
     {% tailwind_css %}
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="flex flex-col min-h-screen bg-gray-100 text-gray-900">
     <nav class="bg-gray-800">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
@@ -102,7 +102,7 @@
         </div>
     </div>
 
-    <main class="p-4">
+    <main class="flex-grow p-4">
         {% block content %}
         {% endblock %}
     </main>
