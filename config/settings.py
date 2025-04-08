@@ -190,5 +190,6 @@ LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
 ]
 
-
+SITE_URL = 'http://localhost:8000'  # vagy a saját domain-ed
+DEFAULT_FROM_EMAIL = 'djangoendeles@google.com'
 

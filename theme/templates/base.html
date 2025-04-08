@@ -66,22 +66,38 @@
     </nav>
 
     <!-- Üzenetek -->
-    {% if messages %}
-        <div class="mb-6 space-y-2">
-            {% for message in messages %}
-                <div class="p-3 rounded-md text-sm font-medium 
-                            {% if message.tags == 'success' %}
-                                bg-green-100 text-green-800
-                            {% elif message.tags == 'error' or message.tags == 'danger' %}
-                                bg-red-100 text-red-800
-                            {% else %}
-                                bg-blue-100 text-blue-800
-                            {% endif %}">
-                    {{ message }}
-                </div>
-            {% endfor %}
+{% if messages %}
+<div class="mb-6 space-y-4">
+    {% for message in messages %}
+        <div class="p-4 rounded-lg shadow-lg border-l-4 text-sm font-medium flex items-start
+                    {% if message.tags == 'success' %}
+                        bg-green-50 text-green-800 border-green-400
+                    {% elif message.tags == 'error' or message.tags == 'danger' %}
+                        bg-red-50 text-red-800 border-red-400
+                    {% else %}
+                        bg-blue-50 text-blue-800 border-blue-400
+                    {% endif %}">
+            {% if message.tags == 'success' %}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+            {% elif message.tags == 'error' or message.tags == 'danger' %}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            {% else %}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            {% endif %}
+            <div>
+                {{ message }}
+            </div>
         </div>
-    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
 
 
     <!-- Mobile Menu -->
@@ -112,21 +128,32 @@
     </footer>
     
     <script>
+        // Mobilmenü gomb és menü elemek
         const menuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        
-        // Toggle mobile menu visibility
-        menuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        const profileButton = document.getElementById('profile-menu-button');
-        const profileMenu = document.getElementById('profile-menu');
-
-        // Toggle profile dropdown visibility on desktop
-        profileButton.addEventListener('click', () => {
-            profileMenu.classList.toggle('hidden');
+    
+        // Toggle mobil menü láthatóság
+        if (menuButton && mobileMenu) {
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    
+        // DOM betöltése után futó esemény
+        document.addEventListener('DOMContentLoaded', () => {
+            const profileButton = document.getElementById('profile-menu-button');
+            const profileMenu = document.getElementById('profile-menu');
+    
+            // Ellenőrizni kell, hogy az elemek léteznek-e
+            if (profileButton && profileMenu) {
+                profileButton.addEventListener('click', () => {
+                    profileMenu.classList.toggle('hidden');
+                });
+            } else {
+                console.error("profileButton vagy profileMenu nem található!");
+            }
         });
     </script>
+    
 </body>
 </html>
