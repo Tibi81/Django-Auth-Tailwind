@@ -15,6 +15,28 @@ def home(request):
     return render(request, 'home.html')
 from .forms import CustomUserCreationForm
 
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
+from django.contrib.auth import logout
+
+class CustomPasswordChangeView(PasswordChangeView):
+    template_name = 'password/password_change.html'
+    success_url = reverse_lazy('password_change_done')  # Ez a jelszóváltás után történő átirányítás helye
+
+from django.contrib.auth.views import PasswordChangeDoneView
+
+class CustomPasswordChangeDoneView(PasswordChangeDoneView):
+    template_name = 'password_change_done.html'
+
+    def get(self, request, *args, **kwargs):
+        # Kiléptetjük a felhasználót
+        logout(request)
+        messages.success(request, "A jelszavad sikeresen megváltozott. Kérlek jelentkezz be új jelszavaddal.")
+        # Átirányítjuk a bejelentkezési oldalra
+        return redirect('login')  # Itt a 'login' URL-re irányítunk
+
+
+
 from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
 from django.conf import settings

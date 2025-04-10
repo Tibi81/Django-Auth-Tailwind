@@ -20,4 +20,6 @@ urlpatterns = [
     path('reset/done/', views.CustomPasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('verify-email/<str:token>/', views.verify_email, name='verify_email'),
     path('resend-verification/', views.resend_verification_email, name='resend_verification'),
+    path('password_change/', views.CustomPasswordChangeView.as_view(), name='password_change'),
+    path('password_change/done/', views.CustomPasswordChangeDoneView.as_view(), name='password_change_done'),
 ]
