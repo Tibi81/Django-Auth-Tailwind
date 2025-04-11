@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="flex">
+    <!-- Sidebar -->
+    <div class="custom-sidebar-width bg-gray-800 text-white min-h-screen p-4">
+
+        <div class="space-y-6">
+            <!-- Profile Section -->
+            <div class="mt-10">
+            <a href="{% url 'profile' %}">
+                <button type="button" id="edit-btn" class="w-full py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                    Profil
+                </button>
+            </a>
+            </div>
+            <!-- Edit Profile Section -->
+            <div class="mt-10">
+            <a href="{% url 'edit_profile' %}">
+                <button type="button" id="edit-btn" class="w-full py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                    Profil szerkesztése
+                </button>
+            </a>
+            </div>
+
+            <!-- Change Password Section -->
+            <div class="mt-10">
+            <a href="{% url 'password_change' %}">
+                <button type="button" id="change-password-button" class="w-full py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                    Jelszócsere
+                </button>
+            </a>
+            </div>
+
+            <!-- Delete Profile Section -->
+            <div class="mt-10">
+            <a href="{% url 'delete_profile' %}">
+                <button type="button" class="w-full py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400">
+                    Profil törlése
+                </button>
+            </a>
+            </div>
+
+            <!-- Logout Section -->
+            <div class="mt-10">
+                <form action="{% url 'logout' %}" method="post" class="w-full">
+                    {% csrf_token %}
+                    <button type="submit" class="w-full py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex-grow p-6">
+        <div class="max-w-4xl mx-auto">
+            {% block profile_content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

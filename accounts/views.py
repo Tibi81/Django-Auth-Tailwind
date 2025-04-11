@@ -13,6 +13,7 @@ from django.urls import reverse_lazy
 
 def home(request):
     return render(request, 'home.html')
+
 from .forms import CustomUserCreationForm
 
 from django.contrib.auth.views import PasswordChangeView
@@ -100,6 +101,11 @@ def user_login(request):
 
 
 
+@login_required
+def profile(request):
+    profile = get_object_or_404(Profile, user=request.user)
+    return render(request, 'profile/profile.html', {'profile': profile})
+
 
 
 
@@ -112,7 +118,7 @@ def edit_profile(request):
         # Update user fields
         request.user.first_name = request.POST.get('first_name', request.user.first_name)
         request.user.last_name = request.POST.get('last_name', request.user.last_name)
-        request.user.save()  # Save the user object to persist first_name and last_name changes
+        request.user.save()
 
         # Update profile fields
         profile.bio = request.POST.get('bio', profile.bio)
@@ -133,34 +139,22 @@ def edit_profile(request):
                 profile.birth_date = datetime.strptime(birth_date, "%Y-%m-%d").date()
             except ValueError:
                 messages.error(request, "Érvénytelen dátumformátum! Használj ÉÉÉÉ-HH-NN formátumot.")
-                return redirect('profile')
+                return redirect('edit_profile')
 
         if 'profile_picture' in request.FILES:
             profile.profile_picture = request.FILES['profile_picture']
 
-        profile.save()  # Save the profile object to persist changes
+        profile.save()
 
-        return redirect('profile')  # Redirect to the profile page after successful update
+        return redirect('profile')
 
-
-    password_form = PasswordChangeForm(user=request.user, data=request.POST)
-    if 'old_password' in request.POST and 'new_password1' in request.POST and 'new_password2' in request.POST:
-        if password_form.is_valid():
-            user = password_form.save()
-            update_session_auth_hash(request, user)
-            messages.success(request, 'Jelszó sikeresen frissítve.')
-            return redirect('profile')
-        else:
-            messages.error(request, 'Hiba történt a jelszó frissítése közben.')
-            
-    else:
-        password_form = PasswordChangeForm(user=request.user)
-
-    return render(request, 'profile/profile.html', {
+    # Ha nem POST, csak GET -> rendereljük az oldalt
+    return render(request, 'profile/edit_profile.html', {
         'profile': profile,
-        'password_form': password_form
+        'user': request.user,
     })
 
+    
 
 
 
