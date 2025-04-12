@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="flex">
+<div class="flex flex-col lg:flex-row">
     <!-- Sidebar -->
-    <div class="custom-sidebar-width bg-gray-800 text-white min-h-screen p-4">
+    <div class="w-full lg:w-1/4  bg-gray-800 text-white lg:min-h-screen p-4">
 
         <div class="space-y-6">
             <!-- Profile Section -->
@@ -52,7 +52,7 @@
     </div>
 
     <!-- Main Content Area -->
-    <div class="flex-grow p-6">
+    <div class="w-full lg:w-3/4 p-6">
         <div class="max-w-4xl mx-auto">
             {% block profile_content %}
             {% endblock %}
