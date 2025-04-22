@@ -110,49 +110,26 @@ def profile(request):
 
 
 
+from .forms import ProfileForm
+
 @login_required
 def edit_profile(request):
     profile = get_object_or_404(Profile, user=request.user)
 
     if request.method == 'POST':
-        # Update user fields
-        request.user.first_name = request.POST.get('first_name', request.user.first_name)
-        request.user.last_name = request.POST.get('last_name', request.user.last_name)
-        request.user.save()
+        form = ProfileForm(request.POST, request.FILES, instance=profile, user=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+        else:
+            messages.error(request, "Hiba történt a mentés során. Ellenőrizd az űrlapot.")
+    else:
+        form = ProfileForm(instance=profile, user=request.user)
 
-        # Update profile fields
-        profile.bio = request.POST.get('bio', profile.bio)
-        profile.location = request.POST.get('location', profile.location)
-        profile.phone_number = request.POST.get('phone_number', profile.phone_number)
-
-        new_email = request.POST.get('email')
-        if new_email and new_email != request.user.email:
-            if User.objects.filter(email=new_email).exclude(pk=request.user.pk).exists():
-                messages.error(request, "Ez az email cím már más felhasználóhoz tartozik.")
-            else:
-                request.user.email = new_email
-                request.user.save()
-
-        birth_date = request.POST.get('birth_date', '')
-        if birth_date:
-            try:
-                profile.birth_date = datetime.strptime(birth_date, "%Y-%m-%d").date()
-            except ValueError:
-                messages.error(request, "Érvénytelen dátumformátum! Használj ÉÉÉÉ-HH-NN formátumot.")
-                return redirect('edit_profile')
-
-        if 'profile_picture' in request.FILES:
-            profile.profile_picture = request.FILES['profile_picture']
-
-        profile.save()
-
-        return redirect('profile')
-
-    # Ha nem POST, csak GET -> rendereljük az oldalt
     return render(request, 'profile/edit_profile.html', {
-        'profile': profile,
-        'user': request.user,
+        'form': form, 'profile': profile
     })
+
 
     
 

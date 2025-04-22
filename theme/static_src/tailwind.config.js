@@ -40,10 +40,42 @@ module.exports = {
          * and make sure the pattern below matches your project structure.
          */
         // '../../**/*.py'
+
+        './static/src/**/*.{js,jsx,ts,tsx}',
         
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors:{
+                'primary': '#5B21B6',
+                'secondary': '#9333EA',
+                'accent': '#FBBF24',
+                'neutral': '#374151',
+                'base-100': '#FFFFFF',
+                'info': '#3ABFF8',
+                'success': '#36D399',
+                'warning': '#FBBD23',
+                'error': '#F87272',
+                'light': '#F9FAFB',
+                'dark': '#111827',
+                'muted': '#6B7280',
+                'ultraViolet': '#726DA8',
+                'glaucous': '#7D8CC4',
+                'nonphotoBlue' : '#A0D2DB',
+                'mintGreen' : '#BEE7E8',
+                'englishViolet' : '#594157',
+                'ultraViolet' : '#665780',
+                brand:{
+                    'platinum': '#ccdbdcff',
+                    'non-photo-blue': '#9ad1d4ff',
+                    'non-photo-blue-2': '#80ced7ff',
+                    'cerulean': '#007ea7ff',
+                    'prussian-blue': '#003249ff',
+                }
+                
+                
+            }
+        },
     },
     plugins: [
         /**

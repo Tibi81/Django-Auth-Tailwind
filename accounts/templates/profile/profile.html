@@ -3,21 +3,32 @@
 {% block title %}Profile{% endblock %}
 
 {% block profile_content %}
-    <div class="profile-container">
-        <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="w-24 h-24 rounded-full">
-        <h2 class="text-xl font-bold">
-            {% if profile.user.first_name %}
-                {{ profile.user.first_name }} {{ profile.user.last_name }}
-            {% else %}
-                {{ profile.user.username }}
-            {% endif %}
-        </h2>
-        <p class="text-gray-600">Bio: {{ profile.bio }}</p>
-        <p class="text-gray-600">Location: {{ profile.location }}</p>
-        <p class="text-gray-600">Birth Date: {{ profile.birth_date|date:"Y F j" }}</p>
-        <p class="text-gray-600">Joined: {{ profile.user.date_joined|date:"Y F j" }}</p>
-        <p class="text-gray-600">Last Updated: {{ profile.updated_at|date:"F j, Y" }}</p>
-        <p class="text-gray-600">Email: {{ user.email }}</p>
-        <p class="text-gray-600">Phone Number: {{ profile.phone_number }}</p>
+    <div class="profile-container mx-auto p-4 bg-white shadow-md rounded-lg">
+        <div class=" grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-ultraViolet p-4 rounded-md md:col-span-2 ">
+                <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="w-24 h-24 rounded-full">
+                <h2 class="text-xl font-bold">
+                {% if profile.user.first_name %}
+                    {{ profile.user.first_name }} {{ profile.user.last_name }}
+                {% else %}
+                    {{ profile.user.username }}
+                {% endif %}
+                </h2>
+            </div>
+            
+            <div class="bg-glaucous p-4 rounded-md">
+                <p class="text-white">Location: {{ profile.location }}</p>
+                <p class="text-gray-600">Birth Date: {{ profile.birth_date|date:"Y F j" }}</p>
+                <p class="text-gray-600">Joined: {{ profile.user.date_joined|date:"Y F j" }}</p>
+                <p class="text-gray-600">Last Updated: {{ profile.updated_at|date:"F j, Y" }}</p>
+            </div>
+            <div class="bg-nonphotoBlue p-4 rounded-md">
+                <p class="text-gray-600">Email: {{ user.email }}</p>
+                <p class="text-gray-600">Phone Number: {{ profile.phone_number }}</p>
+            </div>
+            <div class="bg-mintGreen p-4 rounded-md md:col-span-2">
+                <p class="text-gray-600">Bio: {{ profile.bio }}</p>
+            </div>            
+        </div>
     </div>
 {% endblock %}

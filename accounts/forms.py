@@ -43,4 +43,56 @@ class CustomUserCreationForm(UserCreationForm):
         return user
 
     
+from django import forms
+from .models import Profile
+from django.contrib.auth.models import User
+from django.forms.widgets import SelectDateWidget
+import datetime
+
+
+class ProfileForm(forms.ModelForm):
+    first_name = forms.CharField(label="Keresztnév", required=False)
+    last_name = forms.CharField(label="Vezetéknév", required=False)
+    email = forms.EmailField(label="Email cím", required=True)
+
+    birth_date = forms.DateField(
+        label="Születési dátum",
+        required=False,
+        initial=datetime.date(2000, 1, 1),  # <- ez állítja be az alapértelmezett dátumot
+        widget=SelectDateWidget(
+            years=range(1900, datetime.datetime.now().year + 1)          
+        )
+    )
+
+    class Meta:
+        model = Profile
+        fields = ['profile_picture', 'bio', 'location', 'phone_number', 'birth_date']
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+        # Ha átadjuk a user-t, előre kitöltjük a user mezőket
+        if user:
+            self.fields['first_name'].initial = user.first_name
+            self.fields['last_name'].initial = user.last_name
+            self.fields['email'].initial = user.email
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exclude(pk=self.instance.user.pk).exists():
+            raise forms.ValidationError("Ez az email cím már más felhasználóhoz tartozik.")
+        return email
+
+    def save(self, commit=True):
+        profile = super().save(commit=False)
+        user = profile.user
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+            profile.save()
+        return profile
+
     
