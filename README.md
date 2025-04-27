@@ -9,6 +9,8 @@ A cél egy könnyen integrálható, biztonságos felhasználói autentikációs 
 
 -Jelszó visszaállítása.
 
+-Email hitelesítés.
+
 -Tailwind CSS alapú reszponzív dizájn.
 
 -Könnyen testreszabható autentikációs oldalak.
@@ -52,7 +54,25 @@ python manage.py migrate
 ```bash
 python manage.py collectstatic
 ```
-## Fejlesztés<br>
+### Fejlesztés<br>
+
+## Email hitelesítés beállítása
+
+A projektben az email hitelesítés működéséhez szükséges egy `.env` fájl létrehozása, amely tartalmazza az email beállításokat. Kövesd az alábbi lépéseket:
+
+1. Hozz létre egy `.env` nevű fájlt a projekt gyökérkönyvtárában.
+2. Írd bele az alábbi tartalmat:
+
+    ```env
+    EMAIL_HOST_USER=your_email@example.com
+    EMAIL_HOST_PASSWORD=your_password
+    ```
+
+3. Cseréld le a `your_email@example.com`-ot a saját email címedre, és a `your_password`-ot a megfelelő jelszóra.
+4. Mentsd el a fájlt.
+
+Miután ezt megtetted, most már futtathatod a projektet.
+
 
 ### Futtasd a szervert:
 
