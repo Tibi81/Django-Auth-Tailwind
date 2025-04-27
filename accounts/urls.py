@@ -4,6 +4,9 @@ from django.http import HttpResponse
 from .views import home
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import views as auth_views
+from django.views.generic import RedirectView
+from django.templatetags.static import static
+from django.conf import settings
 
 
 
@@ -26,4 +29,6 @@ urlpatterns = [
     path('resend-verification/', views.resend_verification_email, name='resend_verification'),
     path('password_change/', views.CustomPasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', views.CustomPasswordChangeDoneView.as_view(), name='password_change_done'),
+    
 ]
+

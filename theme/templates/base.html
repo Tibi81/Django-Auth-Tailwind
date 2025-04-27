@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
+    {% load tailwind_tags %}
+    {% load form_tags %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Site{% endblock %}</title>  
-
-    {% load static tailwind_tags %}
-    {% load form_tags %}
-    {% load tailwind_tags%}
-    {% tailwind_css %}
+    <title>{% block title %}My Site{% endblock %}</title> 
+    {% load static %}
+    <!-- Saját CSS -->
     <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+    
+    {% tailwind_css %}
 </head>
+
+    
 <body class="flex flex-col min-h-screen bg-sky-100 text-sky-900">
     <nav class="bg-sky-800 shadow">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
