@@ -90,3 +90,8 @@ A szerzői jogok és licencfeltételek megőrzése.
 A módosított verziók nem kerülhetnek más licenc alatt terjesztésre.
 
 A teljes licencet [itt találhatod.](https://opensource.org/license/mit)
+
+## Ha tetszett a projekt, kérlek, adj neki csillagot! 🌟
+
+A csillagok segítenek abban, hogy a projekt jobban látható legyen, és mások is felfedezhessék!
+
