@@ -5,22 +5,28 @@
 A cél egy könnyen integrálható, biztonságos felhasználói autentikációs rendszer biztosítása Django és Tailwind CSS segítségével. A rendszer gyors és egyszerű módot kínál a regisztrációra, bejelentkezésre és a jelszó visszaállítására.
 
 ### Jellemzők
-Felhasználói regisztráció és bejelentkezés.
+-Felhasználói regisztráció és bejelentkezés.
 
-Jelszó visszaállítása.
+-Jelszó visszaállítása.
 
-Tailwind CSS alapú reszponzív dizájn.
+-Tailwind CSS alapú reszponzív dizájn.
 
-Könnyen testreszabható autentikációs oldalak.
+-Könnyen testreszabható autentikációs oldalak.
 
 ### Követelmények
-Python 3.8+
+-Python 3.8+
 
-Django 3.0+
+-Django 3.0+
 
-Node.js 12+
+-Node.js 12+
 
-Npm
+-Npm
+
+### Dokumentáció
+
+A teljes dokumentáció itt található: (https://django-tailwind.readthedocs.io/)
+
+[sakafa.pythonanywhere.com](https://sakafa.pythonanywhere.com)
 
 ### Telepítés
 Klónozd a repót:
@@ -67,3 +73,4 @@ npm install
 ```bash
 npm run build
 ```
+
