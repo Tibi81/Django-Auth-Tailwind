@@ -71,6 +71,16 @@ npm install
 ```bash
 npm run build
 ```
+
+## Hibajelzés és javítási javaslatok
+Ha hibát találsz a projektben, kérjük, nyiss egy új Issue-t a GitHub repóban. A hiba leírása mellett kérjük, add meg a következő információkat:
+
+-A hiba pontos leírása
+
+-A használt rendszer és verzió
+
+-Lépések, amelyek reprodukálják a hibát
+
 ## Felhasználási feltételek
 
 Ez a projekt a MIT licenc alatt elérhető. Szabadon másolhatod, módosíthatod és terjesztheted a projektet, amennyiben betartod a következő feltételeket:
