@@ -1,5 +1,26 @@
 # Django Auth Tailwind
-## Ez a projekt egy Django alapú autentikációs rendszer, amely Tailwind CSS-t használ a dizájnhoz.
+### Ez a projekt egy Django alapú autentikációs rendszer, amely Tailwind CSS-t használ a dizájnhoz.
+
+### Cél
+A cél egy könnyen integrálható, biztonságos felhasználói autentikációs rendszer biztosítása Django és Tailwind CSS segítségével. A rendszer gyors és egyszerű módot kínál a regisztrációra, bejelentkezésre és a jelszó visszaállítására.
+
+### Jellemzők
+Felhasználói regisztráció és bejelentkezés.
+
+Jelszó visszaállítása.
+
+Tailwind CSS alapú reszponzív dizájn.
+
+Könnyen testreszabható autentikációs oldalak.
+
+### Követelmények
+Python 3.8+
+
+Django 3.0+
+
+Node.js 12+
+
+Npm
 
 ### Telepítés
 Klónozd a repót:
