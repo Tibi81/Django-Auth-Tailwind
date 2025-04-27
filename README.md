@@ -1,9 +1,56 @@
-<div style="position: relative; text-align: center; color: red;">
-  <h1 >
-    Fejlesztés alatt!
-  </h1>
-  <img src="https://github.com/user-attachments/assets/f64e4283-ae9c-4cf3-a4e0-3a5e4711876f" alt="háttér" style="width: 100%; height: auto;">
-  <h1 >
-    Under development!
-  </h1>
-</div>
+Django Auth Tailwind
+Ez a projekt egy Django alapú autentikációs rendszer, amely Tailwind CSS-t használ a dizájnhoz.
+
+Telepítés
+Klónozd a repót:
+
+```bash
+git clone https://github.com/Tibi81/Django_Auth-Tailwind.git
+```
+Lépj a projekt mappájába:
+
+```bash
+cd Django_Auth-Tailwind
+```
+Telepítsd a szükséges csomagokat:
+
+```bash
+pip install -r requirements.txt
+```
+Készíts migrációkat:
+
+```bash
+Másolás
+Szerkesztés
+python manage.py migrate
+```
+Állítsd be a statikus fájlokat (ha szükséges):
+
+```bash
+Másolás
+Szerkesztés
+python manage.py collectstatic
+```
+Fejlesztés
+Futtasd a szervert:
+
+```bash
+Másolás
+Szerkesztés
+python manage.py runserver
+```
+Tailwind CSS konfigurálás
+Telepítsd a Node.js csomagokat:
+
+```bash
+Másolás
+Szerkesztés
+npm install
+```
+Futtasd a Tailwind build-et:
+
+```bash
+Másolás
+Szerkesztés
+npm run build
+```
