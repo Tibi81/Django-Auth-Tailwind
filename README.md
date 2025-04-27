@@ -26,8 +26,6 @@ A cél egy könnyen integrálható, biztonságos felhasználói autentikációs 
 
 A teljes dokumentáció itt található: (https://django-tailwind.readthedocs.io/)
 
-[sakafa.pythonanywhere.com](https://sakafa.pythonanywhere.com)
-
 ### Telepítés
 Klónozd a repót:
 
@@ -73,4 +71,12 @@ npm install
 ```bash
 npm run build
 ```
+## Felhasználási feltételek
 
+Ez a projekt a MIT licenc alatt elérhető. Szabadon másolhatod, módosíthatod és terjesztheted a projektet, amennyiben betartod a következő feltételeket:
+
+A szerzői jogok és licencfeltételek megőrzése.
+
+A módosított verziók nem kerülhetnek más licenc alatt terjesztésre.
+
+A teljes licencet [itt találhatod.](https://opensource.org/license/mit)
