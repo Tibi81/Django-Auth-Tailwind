@@ -8,8 +8,9 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', default='profile_pics/default.jpg', blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True)
-    email_token = models.CharField(max_length=64, blank=True)
+    email_token = models.CharField(max_length=64, blank=True, null=True)  # Ez tárolja az email megerősítő tokent
     email_verified = models.BooleanField(default=False)
+    pending_email = models.EmailField(blank=True, null=True)  # Ez tárolja az új email címet
 
     def __str__(self):
         return self.user.username

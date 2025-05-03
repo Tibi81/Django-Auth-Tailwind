@@ -3,6 +3,7 @@ from .models import Profile
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 import re
+from django.utils.crypto import get_random_string
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, help_text="Kötelező. Adj meg egy érvényes, egyedi email címet.")
@@ -49,7 +50,6 @@ from django.contrib.auth.models import User
 from django.forms.widgets import SelectDateWidget
 import datetime
 
-
 class ProfileForm(forms.ModelForm):
     first_name = forms.CharField(label="Keresztnév", required=False)
     last_name = forms.CharField(label="Vezetéknév", required=False)
@@ -60,7 +60,7 @@ class ProfileForm(forms.ModelForm):
         required=False,
         initial=datetime.date(2000, 1, 1),  # <- ez állítja be az alapértelmezett dátumot
         widget=SelectDateWidget(
-            years=range(1900, datetime.datetime.now().year + 1)          
+            years=range(1900, datetime.datetime.now().year + 1)
         )
     )
 
@@ -69,18 +69,18 @@ class ProfileForm(forms.ModelForm):
         fields = ['profile_picture', 'bio', 'location', 'phone_number', 'birth_date']
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)
+        self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
 
         # Ha átadjuk a user-t, előre kitöltjük a user mezőket
-        if user:
-            self.fields['first_name'].initial = user.first_name
-            self.fields['last_name'].initial = user.last_name
-            self.fields['email'].initial = user.email
+        if self.user:
+            self.fields['first_name'].initial = self.user.first_name
+            self.fields['last_name'].initial = self.user.last_name
+            self.fields['email'].initial = self.user.email
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email).exclude(pk=self.instance.user.pk).exists():
+        if User.objects.filter(email=email).exclude(pk=self.user.pk if self.user else None).exists():
             raise forms.ValidationError("Ez az email cím már más felhasználóhoz tartozik.")
         return email
 
@@ -89,10 +89,21 @@ class ProfileForm(forms.ModelForm):
         user = profile.user
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
-        user.email = self.cleaned_data['email']
+
+        # Csak akkor frissítjük az email címet, ha ténylegesen megváltozott
+        if user.email != self.cleaned_data['email']:
+            profile.pending_email = user.email  # Beállítjuk a pending_email mezőt
+            profile.email_verified = False  # Visszaállítjuk az email_verified mezőt
+            profile.email_token = get_random_string(length=64)  # Új token generálása
+            print(f"Email changed to: {user.email}, pending verification.")  # Debug üzenet
+
         if commit:
+            print(f"Saving user with email: {user.email}")  # Debug üzenet
             user.save()
+            print(f"User saved with email: {user.email}")  # Debug üzenet
             profile.save()
+            print("Profile saved.")  # Debug üzenet
         return profile
+
 
     

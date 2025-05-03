@@ -7,6 +7,7 @@ from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
 from django.templatetags.static import static
 from django.conf import settings
+from .views import verify_email, send_verification_email, resend_verification_email
 
 
 
@@ -25,7 +26,9 @@ urlpatterns = [
     path('password_reset/done/', views.CustomPasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', views.CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', views.CustomPasswordResetCompleteView.as_view(), name='password_reset_complete'),
-    path('verify-email/<str:token>/', views.verify_email, name='verify_email'),
+    path('verify-email/<str:token>/', verify_email, name='verify_email'),
+    path('send-verification-email/', send_verification_email, name='send_verification_email'),
+    path('resend-verification-email/', resend_verification_email, name='resend_verification_email'),
     path('resend-verification/', views.resend_verification_email, name='resend_verification'),
     path('password_change/', views.CustomPasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', views.CustomPasswordChangeDoneView.as_view(), name='password_change_done'),

@@ -54,17 +54,15 @@
             <div class ="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                 {{ form.birth_date }} 
             </div>
-        </div>
-          
-        
-        
-
+        </div>     
         <!-- Email mező -->
         <div class="mb-4">
             <label for="email" class="block text-sm font-medium text-gray-700">Email cím:</label>
             <input type="email" name="email" id="email" value="{{ user.email }}" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+            {% if form.email.errors %}
+            <p class="mt-1 text-sm text-red-600">{{ form.email.errors.0 }}</p>
+            {% endif %}
         </div>
-
         <!-- Phone Number mező -->
         <div class="mb-4">
             <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone Number:</label>

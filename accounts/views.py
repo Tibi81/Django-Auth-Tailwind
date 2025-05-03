@@ -87,15 +87,23 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            # Email megerősítés ellenőrzése
             if not user.profile.email_verified:
-                messages.error(request, 'Előbb erősítsd meg az email címedet, mielőtt belépsz.')
+                print(f"User {username} tried to log in without verifying email.")  # Debug üzenet
+                messages.error(request, 'Előbb erősítsd meg az email címedet, mielőtt belépsz!!!!!!!.')                
                 return redirect('resend_verification')
 
             login(request, user)
+
+            # Ellenőrizzük, van-e függő email token a session-ben
+            token = request.session.pop('pending_email_token', None)
+            if token:
+                return redirect('verify_email', token=token)
+
             return redirect('profile')
         else:
-            return render(request, 'registration/login.html', {'error': 'Helytelen felhasználónév vagy jelszó'})
+            messages.error(request, 'Helytelen felhasználónév vagy jelszó')
+            return render(request, 'registration/login.html', {'username': username})
+
     
     return render(request, 'registration/login.html')
 
@@ -111,6 +119,11 @@ def profile(request):
 
 
 from .forms import ProfileForm
+from django.utils.crypto import get_random_string
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib import messages
+from django.shortcuts import redirect
 
 @login_required
 def edit_profile(request):
@@ -118,20 +131,49 @@ def edit_profile(request):
 
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile, user=request.user)
+
         if form.is_valid():
-            form.save()
-            return redirect('profile')
+            new_email = form.cleaned_data.get('email')
+            
+
+            # Ha az email cím változott
+            if new_email != profile.user.email:
+                token = get_random_string(length=64)
+                profile.email_token = token
+                profile.pending_email = new_email  # Itt tároljuk el az új email címet
+                profile.save()
+
+                # Küldj megerősítő emailt az új címre
+                verification_link = settings.SITE_URL + reverse('verify_email', args=[token])
+                send_mail(
+                    subject='Email cím megerősítése',
+                    message=f'Kérlek kattints az alábbi linkre az email címed megerősítéséhez: {verification_link}',
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[new_email],
+                    fail_silently=False,
+                )
+
+                # Értesítés az előző email címre
+                send_mail(
+                    subject='Email cím módosítása',
+                    message=f'Kedves {request.user.username},\n\nA regisztrált email címedet megváltoztatták. Ha nem te végezted ezt a módosítást, kérlek vedd fel velünk a kapcsolatot.',
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[profile.user.email],
+                    fail_silently=False,
+                )
+
+                messages.success(request, 'Az email cím módosítását megerősítő linket küldtünk az új email címedre.')
+                return redirect('login')  # Visszairányítunk a profil oldalra
+            else:
+                form.save()
+                messages.success(request, 'Profil sikeresen frissítve.')
+                return redirect('login')  # Ha nem történt módosítás
         else:
             messages.error(request, "Hiba történt a mentés során. Ellenőrizd az űrlapot.")
     else:
         form = ProfileForm(instance=profile, user=request.user)
 
-    return render(request, 'profile/edit_profile.html', {
-        'form': form, 'profile': profile
-    })
-
-
-    
+    return render(request, 'profile/edit_profile.html', {'form': form, 'profile': profile})
 
 
 
@@ -161,10 +203,12 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.urls import reverse
 
-def send_verification_email(user):
+def send_verification_email(user, new_email):
     token = get_random_string(length=64)
     user.profile.email_token = token
+    user.profile.pending_email = new_email  # Itt tároljuk el az új email címet
     user.profile.save()
+    print(f"Verification email sent to: {new_email}")  # Debug üzenet
 
     verification_link = settings.SITE_URL + reverse('verify_email', args=[token])
 
@@ -180,24 +224,48 @@ from django.http import Http404
 
 def verify_email(request, token):
     try:
-        # A profil lekérése a token alapján
         profile = get_object_or_404(Profile, email_token=token)
-        
-        # Token validálása
-        if profile.email_verified:
-            messages.info(request, 'Ez az email cím már megerősítve van.')
-            return redirect('login')  # Vagy a kívánt oldal
-        
-        # Email cím megerősítése
-        profile.email_verified = True
-        profile.email_token = ''  # A token törlése
-        profile.save()
+        print(f"Profile found with token: {token}")  # Debug üzenet
 
-        messages.success(request, 'Email cím sikeresen megerősítve!')
-        return redirect('login')  # A felhasználó bejelentkezési oldalra navigálása
+        # Első email megerősítés – bejelentkezés nem szükséges
+        if not profile.email_verified:
+            profile.email_verified = True
+            profile.email_token = ''
+            profile.save()
+            messages.success(request, 'Sikeresen megerősítetted az email címed. Most már be tudsz jelentkezni.')
+            return redirect('login')
+
+        # Másodlagos email cím megerősítése (már létező fiókhoz)
+        if request.user.is_authenticated:
+            if request.user != profile.user:
+                messages.error(request, 'Ez az email megerősítő link nem a Te fiókodhoz tartozik.')
+                return redirect('login')
+
+            if profile.pending_email:
+                user = profile.user
+                user.email = profile.pending_email
+                user.save()
+                profile.pending_email = ''
+                profile.email_token = ''
+                profile.save()
+                messages.success(request, 'Az email címed sikeresen megváltozott.')
+                return redirect('profile')
+
+            messages.info(request, 'Ez az email cím már meg van erősítve.')
+            return redirect('profile')
+
+        # Ha már megerősítették, de nincs bejelentkezve
+        messages.info(request, 'Ez az email cím már meg van erősítve. Jelentkezz be.')
+        return redirect('login')
 
     except Profile.DoesNotExist:
         raise Http404("Profil nem található vagy érvénytelen token.")
+
+
+
+
+
+
 
 
 from django.contrib.auth.models import User
