@@ -44,6 +44,7 @@ git clone https://github.com/Tibi81/Django_Auth-Tailwind.git
 ```bash
 python -m venv venv
 .venv\Scripts\activate
+```
 
 ### Lépj a projekt mappájába:
 
