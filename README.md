@@ -4,7 +4,7 @@
 ##🚧 Fejlesztés alatt
 ###Ez a projekt már működőképes és használható formában van, azonban jelenleg nincsenek még automatikus tesztek írva hozzá. A közeljövőben a kód strukturálásán, olvashatóságán és teszteléssel való lefedettségén dolgozom a jobb karbantarthatóság és megbízhatóság érdekében.
 
-![Főoldal képernyőképe](https://github.com/Tibi81/Django_Auth-Tailwind/issues/2)
+![Főoldal képernyőképe](https://private-user-images.githubusercontent.com/125083407/437969695-b004b7a7-4db7-4d83-9c00-b8323df06ab0.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDY2ODc0NzcsIm5iZiI6MTc0NjY4NzE3NywicGF0aCI6Ii8xMjUwODM0MDcvNDM3OTY5Njk1LWIwMDRiN2E3LTRkYjctNGQ4My05YzAwLWI4MzIzZGYwNmFiMC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNTA4JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDUwOFQwNjUyNTdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0yNjRhMDAzYWE5ZjllMmYzNjE4ZWMzYjVhYTQ0MjY0MDhiNzVmZDJjYTg0ODcxZDQzZjUzNTcxZTY0YmY1ZDllJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.NeA_U4Dthl33sTcpVmNfnjcPDGNicFaKAO3o87dDZIU&_sm_au_=iVVPNbZLnkQWSJLQFRKWQKQKVHC62)
 
 
 
