@@ -1,7 +1,7 @@
 # Django Auth Tailwind
 ### Ez a projekt egy Django alapú autentikációs rendszer, amely Tailwind CSS-t használ a dizájnhoz.
 
-# 🚧 ### Fejlesztés alatt
+# 🚧  Fejlesztés alatt
 Ez a projekt már működőképes és használható formában van, azonban jelenleg nincsenek még automatikus tesztek írva hozzá. A közeljövőben a kód strukturálásán, olvashatóságán és teszteléssel való lefedettségén dolgozom a jobb karbantarthatóság és megbízhatóság érdekében.
 
 ![Főoldal képernyőképe](https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/Profil.png)
