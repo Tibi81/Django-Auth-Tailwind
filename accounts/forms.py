@@ -48,9 +48,6 @@ class CustomUserCreationForm(UserCreationForm):
             user.save()
         return user
 
-    
-
-
 class ProfileForm(forms.ModelForm):
     first_name = forms.CharField(label="Keresztnév", required=False)
     last_name = forms.CharField(label="Vezetéknév", required=False)

@@ -1,15 +1,11 @@
 # Email küldés logika
-
-from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
 from django.conf import settings
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from accounts.models import Profile
-from django.http import Http404
-from django.utils import timezone
 from django.utils.timezone import now
 from .token_utils import generate_email_token
 

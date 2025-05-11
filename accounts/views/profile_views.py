@@ -8,7 +8,6 @@ from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 from django.urls import reverse
 from accounts.forms import ProfileForm
-from django.utils.crypto import get_random_string
 from django.conf import settings
 from django.utils import timezone
 from datetime import timedelta
@@ -74,7 +73,7 @@ def edit_profile(request):
             else:
                 form.save()
                 messages.success(request, 'Profil sikeresen frissítve.')
-                return redirect('login')  # Ha nem történt módosítás
+                return redirect('profile')  # Ha nem történt módosítás
         else:
             messages.error(request, "Hiba történt a mentés során. Ellenőrizd az űrlapot.")
     else:
