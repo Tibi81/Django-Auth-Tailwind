@@ -3,7 +3,12 @@ from .models import Profile
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 import re
-from django.utils.crypto import get_random_string
+from django.forms.widgets import SelectDateWidget
+import datetime
+from accounts.utils.token_utils import generate_email_token
+import logging
+
+logger = logging.getLogger(__name__)
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, help_text="Kötelező. Adj meg egy érvényes, egyedi email címet.")
@@ -44,11 +49,7 @@ class CustomUserCreationForm(UserCreationForm):
         return user
 
     
-from django import forms
-from .models import Profile
-from django.contrib.auth.models import User
-from django.forms.widgets import SelectDateWidget
-import datetime
+
 
 class ProfileForm(forms.ModelForm):
     first_name = forms.CharField(label="Keresztnév", required=False)
@@ -60,7 +61,7 @@ class ProfileForm(forms.ModelForm):
         required=False,
         initial=datetime.date(2000, 1, 1),  # <- ez állítja be az alapértelmezett dátumot
         widget=SelectDateWidget(
-            years=range(1900, datetime.datetime.now().year + 1)
+            years=sorted(range(1900, datetime.datetime.now().year + 1), reverse=True)  # Fordított sorrendben jeleníti meg
         )
     )
 
@@ -94,15 +95,18 @@ class ProfileForm(forms.ModelForm):
         if user.email != self.cleaned_data['email']:
             profile.pending_email = user.email  # Beállítjuk a pending_email mezőt
             profile.email_verified = False  # Visszaállítjuk az email_verified mezőt
-            profile.email_token = get_random_string(length=64)  # Új token generálása
-            print(f"Email changed to: {user.email}, pending verification.")  # Debug üzenet
+            if not profile.email_token:
+                profile.email_token = generate_email_token()  # Új token generálása
+            logger.info(f"Email changed to: {profile.pending_email}, pending verification.")  # Debug üzenet
 
         if commit:
-            print(f"Saving user with email: {user.email}")  # Debug üzenet
-            user.save()
-            print(f"User saved with email: {user.email}")  # Debug üzenet
-            profile.save()
-            print("Profile saved.")  # Debug üzenet
+            try:
+                user.save()
+                profile.save()
+            except Exception as e:
+                logger.info(f"Hiba történt a mentés során: {e}") # Debug üzenet
+                raise forms.ValidationError("Nem sikerült frissíteni a profilt. Próbáld újra később.")
+
         return profile
 
 
