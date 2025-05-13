@@ -30,9 +30,9 @@
             <!-- Menüelemek -->
             <a href="{% url 'profile' %}" class="w-auto lg:w-full flex items-center space-x-2 p-2 rounded-md transition-all duration-200
                 {% if current_url == 'profile' %}
-                    bg-blue-800 text-white
+                    bg-blue-600 text-white
                 {% else %}
-                    text-white hover:bg-blue-700
+                    text-white hover:bg-sky-700
                 {% endif %}">
                 <i class="fas fa-user text-xl"></i>
                 <span class="sidebar-label hidden lg:inline">Profil</span>
@@ -40,9 +40,9 @@
 
             <a href="{% url 'edit_profile' %}" class="w-auto lg:w-full flex items-center space-x-2 p-2 rounded-md transition-all duration-200
                 {% if current_url == 'edit_profile' %}
-                    bg-blue-800 text-white
+                    bg-blue-600 text-white
                 {% else %}
-                    text-white hover:bg-blue-700
+                    text-white hover:bg-sky-700
                 {% endif %}">
                 <i class="fas fa-user-edit text-xl"></i>
                 <span class="sidebar-label hidden lg:inline">Profil szerkesztése</span>
@@ -50,9 +50,9 @@
 
             <a href="{% url 'password_change' %}" class="w-auto lg:w-full flex items-center space-x-2 p-2 rounded-md transition-all duration-200
                 {% if current_url == 'password_change' %}
-                    bg-blue-800 text-white
+                    bg-blue-600 text-white
                 {% else %}
-                    text-white hover:bg-blue-700
+                    text-white hover:bg-sky-700
                 {% endif %}">
                 <i class="fas fa-key text-xl"></i>
                 <span class="sidebar-label hidden lg:inline">Jelszócsere</span>
