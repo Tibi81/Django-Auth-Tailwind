@@ -58,7 +58,7 @@ def user_login(request):
                     messages.error(request, 'Az email megerősítő link lejárt. Kérj újat!')
                     return redirect('resend_verification')
 
-                messages.error(request, 'Előbb kérlek erősítsd meg az email címedet, mielőtt belépsz.')                
+                messages.error(request, 'Előbb kérlek erősítsd meg az email címedet, mielőtt megpróbálsz bejelentkezni.')                
                 return redirect('resend_verification')
 
             

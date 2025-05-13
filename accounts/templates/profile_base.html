@@ -1,69 +1,119 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- Main Container -->
 <div class="flex flex-col lg:flex-row">
+
     <!-- Sidebar -->
-    <div class="w-full lg:w-1/4 bg-sky-900 text-white lg:min-h-screen p-4">
-        <div class="space-y-6">
-            <!-- Profile Section -->
-            <div class="mt-10">
-                <a href="{% url 'profile' %}">
-                    <button type="button" id="edit-btn"
-                        class="w-full py-2 bg-blue-400 text-white rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        Profil
-                    </button>
-                </a>
+    <div id="sidebar"
+        class="bg-sky-900 text-white w-full lg:w-64 lg:min-h-screen p-4 transition-all duration-300 ease-in-out 
+            flex flex-row lg:flex-col justify-center items-center lg:justify-start lg:items-start h-auto space-x-4 lg:space-x-0 lg:space-y-6">
+
+
+
+
+
+        {% with request.resolver_match.url_name as current_url %}
+        <!-- Wrapper a menüelemeknek -->
+        <div class="flex flex-row lg:flex-col items-center justify-center lg:items-start lg:justify-start w-full space-x-4 lg:space-x-0 lg:space-y-6">
+
+
+
+            <!-- Sidebar Toggle Button (csak nagy képernyőn) -->
+            <div class="hidden lg:flex items-center space-x-2">
+                <button onclick="toggleSidebar()" class="flex items-center space-x-2 text-white text-xl">
+                    <i class="fas fa-bars"></i>
+                    <span class="sidebar-label hidden lg:inline">Menü</span>
+                </button>
             </div>
 
-            <!-- Edit Profile Section -->
-            <div class="mt-10">
-                <a href="{% url 'edit_profile' %}">
-                    <button type="button" id="edit-btn"
-                        class="w-full py-2 bg-blue-400 text-white rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        Profil szerkesztése
-                    </button>
-                </a>
-            </div>
+            <!-- Menüelemek -->
+            <a href="{% url 'profile' %}" class="w-auto lg:w-full flex items-center space-x-2 p-2 rounded-md transition-all duration-200
+                {% if current_url == 'profile' %}
+                    bg-blue-800 text-white
+                {% else %}
+                    text-white hover:bg-blue-700
+                {% endif %}">
+                <i class="fas fa-user text-xl"></i>
+                <span class="sidebar-label hidden lg:inline">Profil</span>
+            </a>
 
-            <!-- Change Password Section -->
-            <div class="mt-10">
-                <a href="{% url 'password_change' %}">
-                    <button type="button" id="change-password-button"
-                        class="w-full py-2 bg-blue-400 text-white rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        Jelszócsere
-                    </button>
-                </a>
-            </div>
+            <a href="{% url 'edit_profile' %}" class="w-auto lg:w-full flex items-center space-x-2 p-2 rounded-md transition-all duration-200
+                {% if current_url == 'edit_profile' %}
+                    bg-blue-800 text-white
+                {% else %}
+                    text-white hover:bg-blue-700
+                {% endif %}">
+                <i class="fas fa-user-edit text-xl"></i>
+                <span class="sidebar-label hidden lg:inline">Profil szerkesztése</span>
+            </a>
 
-            <!-- Delete Profile Section -->
-            <div class="mt-10">
-                <a href="{% url 'delete_profile' %}">
-                    <button type="button"
-                        class="w-full py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400">
-                        Profil törlése
-                    </button>
-                </a>
-            </div>
+            <a href="{% url 'password_change' %}" class="w-auto lg:w-full flex items-center space-x-2 p-2 rounded-md transition-all duration-200
+                {% if current_url == 'password_change' %}
+                    bg-blue-800 text-white
+                {% else %}
+                    text-white hover:bg-blue-700
+                {% endif %}">
+                <i class="fas fa-key text-xl"></i>
+                <span class="sidebar-label hidden lg:inline">Jelszócsere</span>
+            </a>
 
-            <!-- Logout Section -->
-            <div class="mt-10">
-                <form action="{% url 'logout' %}" method="post" class="w-full">
-                    {% csrf_token %}
-                    <button type="submit"
-                        class="w-full py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                        Kijelentkezés
-                    </button>
-                </form>
-            </div>
+            <a href="{% url 'delete_profile' %}" class="w-auto lg:w-full flex items-center space-x-2 p-2 rounded-md transition-all duration-200
+                {% if current_url == 'delete_profile' %}
+                    bg-red-700 text-white
+                {% else %}
+                    text-white hover:bg-red-600
+                {% endif %}">
+                <i class="fas fa-user-times text-xl"></i>
+                <span class="sidebar-label hidden lg:inline">Profil törlése</span>
+            </a>
+
+            <form action="{% url 'logout' %}" method="post" class="w-full">
+                {% csrf_token %}
+                <button type="submit"
+                    class="w-auto lg:w-full flex items-center space-x-2 p-2 rounded-md transition-all duration-200 text-white hover:bg-gray-700">
+                    <i class="fas fa-sign-out-alt text-xl"></i>
+                    <span class="sidebar-label hidden lg:inline">Kijelentkezés</span>
+                </button>
+            </form>
+
         </div>
+        {% endwith %}
     </div>
 
-    <!-- Main Content Area -->
+    <!-- Main Content -->
     <div class="w-full lg:w-3/4 p-6 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white">
         <div class="max-w-4xl mx-auto">
             {% block profile_content %}
             {% endblock %}
         </div>
     </div>
+
 </div>
+
+
+<!-- Sidebar toggle script -->
+<script>
+    let isCollapsed = false;
+
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const labels = sidebar.querySelectorAll('.sidebar-label');
+
+        isCollapsed = !isCollapsed;
+
+        // Szélesség módosítása
+        sidebar.classList.toggle('lg:w-64', !isCollapsed);
+        sidebar.classList.toggle('lg:w-20', isCollapsed);
+
+        // Csak asztali nézetben módosítsuk a címkéket
+        if (window.innerWidth >= 1024) {
+            labels.forEach(label => {
+                label.classList.toggle('lg:inline', !isCollapsed);
+                label.classList.toggle('hidden', isCollapsed);
+            });
+        }
+    }
+</script>
+
 {% endblock %}
