@@ -37,14 +37,14 @@ def verify_email(request, token):
     print(f"Profile found with token: {token}")  # Debug üzenet
 
     # Ellenőrizzük, hogy a token lejárt-e
-    if profile.email_token_expires and profile.email_token_expires < now():
+    if profile.email_token_expires  < now():
         messages.error(request, 'A megerősítő link lejárt. Kérlek kérj újat.')
         return redirect('resend_verification')
 
     # Első email megerősítés – bejelentkezés nem szükséges
     if not profile.email_verified:
         profile.email_verified = True
-        profile.email_token = None  # Token törlése, nem csak üres string
+        profile.email_token = ''  # Token törlése, nem csak üres string
         profile.save()
         messages.success(request, 'Sikeresen megerősítetted az email címed. Most már be tudsz jelentkezni.')
         return redirect('login')
@@ -60,7 +60,7 @@ def verify_email(request, token):
             user.email = profile.pending_email
             user.save()
             profile.pending_email = None  # Töröljük a pending_email mezőt
-            profile.email_token = None  # Token törlése
+            profile.email_token = ''  # Token törlése
             profile.save()
             messages.success(request, 'Az email címed sikeresen megváltozott.')
             return redirect('profile')

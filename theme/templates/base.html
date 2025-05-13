@@ -35,7 +35,7 @@
                     </button>
                 </div>
                 <div class="hidden sm:block sm:ml-6">
-                    <div class="flex space-x-4">
+                    <div class="flex h-16 items-center space-x-4">
                         <a href="{% url 'home' %}" class="rounded-md px-3 py-2 text-sm font-medium text-sky-100 hover:bg-sky-600 hover:text-white">Home</a>
                         {% if request.user.is_authenticated %}
                            <div class="relative group inline-block pb-6">
@@ -55,22 +55,22 @@
                                 {% endif %}
 
                                 <!-- A lebegő menü -->
-    <div class="absolute right-0 mt-2 w-48 bg-sky-700 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 
-                opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-200 z-50">
-        <div class="py-1 px-2">
-            <a href="{% url 'profile' %}"
-               class="block px-4 py-2 text-sm text-sky-100 rounded-md hover:bg-sky-600 hover:text-white transition">
-               Profile
-            </a>
-            <form action="{% url 'logout' %}" method="post" class="inline">
-                {% csrf_token %}
-                <button type="submit"
-                        class="block text-left w-full px-4 py-2 text-sm text-sky-100 rounded-md hover:bg-sky-600 hover:text-white transition">
-                    Logout
-                </button>
-            </form>
-        </div>
-    </div>
+                                <div class="absolute right-0 mt-2 w-48 bg-sky-700 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 
+                                            opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-200 z-50">
+                                    <div class="py-1 px-2">
+                                        <a href="{% url 'profile' %}"
+                                        class="block px-4 py-2 text-sm text-sky-100 rounded-md hover:bg-sky-600 hover:text-white transition">
+                                        Profile
+                                        </a>
+                                        <form action="{% url 'logout' %}" method="post" class="inline">
+                                            {% csrf_token %}
+                                            <button type="submit"
+                                                    class="block text-left w-full px-4 py-2 text-sm text-sky-100 rounded-md hover:bg-sky-600 hover:text-white transition">
+                                                Logout
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
     
 
                             </div>
