@@ -52,24 +52,11 @@ def edit_profile(request):
                     messages.error(request, f'Hiba történt az email küldésekor: {e}')
                     return redirect('edit_profile')
                 
-
-                # Értesítés az előző email címre
-                try:
-                    send_mail(
-                        subject='Email cím módosítása',
-                        message=f'Kedves {request.user.username},\n\nA regisztrált email címedet megváltoztatták. Ha nem te végezted ezt a módosítást, kérlek vedd fel velünk a kapcsolatot.',
-                        from_email=settings.DEFAULT_FROM_EMAIL,
-                        recipient_list=[profile.user.email],
-                        fail_silently=False,
-                    )
-                except Exception as e:
-                    messages.error(request, f'Hiba történt az email küldésekor: {e}')
-                    return redirect('edit_profile') 
-                  
+                 
                 # Visszairányítunk a bejelentkezési oldalra
 
                 messages.success(request, 'Az email cím módosítását megerősítő linket küldtünk az új email címedre.')
-                return redirect('login')  # Visszairányítunk a profil oldalra
+                return redirect('profile')  # Visszairányítunk a profil oldalra
             else:
                 form.save()
                 messages.success(request, 'Profil sikeresen frissítve.')

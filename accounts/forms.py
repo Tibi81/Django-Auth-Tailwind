@@ -91,9 +91,13 @@ class ProfileForm(forms.ModelForm):
         # Csak akkor frissítjük az email címet, ha ténylegesen megváltozott
         if user.email != self.cleaned_data['email']:
             profile.pending_email = user.email  # Beállítjuk a pending_email mezőt
+            print (f"(forms) pending email cím beállítva: {profile.pending_email}")  # Debug üzenet
+            print (f"(forms) email cím: {user.email}")
             profile.email_verified = False  # Visszaállítjuk az email_verified mezőt
+            print (f"(forms) email verified: {profile.email_verified}")
             if not profile.email_token:
                 profile.email_token = generate_email_token()  # Új token generálása
+                print (f"(forms) email token: {profile.email_token}")
             logger.info(f"Email changed to: {profile.pending_email}, pending verification.")  # Debug üzenet
 
         if commit:

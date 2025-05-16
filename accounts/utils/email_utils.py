@@ -8,12 +8,18 @@ from django.contrib import messages
 from accounts.models import Profile
 from django.utils.timezone import now
 from .token_utils import generate_email_token
+from datetime import timedelta
 
 def send_verification_email(user, new_email):
     token  = generate_email_token()
-
     user.profile.email_token = token
+    user.profile.email_token_expires = now() + timedelta(hours=24)  # Token érvényességének frissítése
+    user.profile.email_token_used = False  # Token használatba vétele
+   
     user.profile.pending_email = new_email  # Itt tároljuk el az új email címet
+    print (f"Token generálva: {token}")  # Debug üzenet
+    print (f"Új email cím: {new_email}")  # Debug üzenet
+    
     user.profile.save()
     print(f"Verification email sent to: {new_email}")  # Debug üzenet
 
@@ -26,28 +32,65 @@ def send_verification_email(user, new_email):
 
 
 
-def verify_email(request, token):
-    profile = Profile.objects.filter(email_token=token).first()
+from django.utils.timezone import now
+from django.contrib import messages
+from django.shortcuts import redirect
+from accounts.models import Profile
+from django.db import IntegrityError
 
+def verify_email(request, token):
+    
+    
+    profile = Profile.objects.filter(email_token=token).first()
+    print (f"Profile keresése token alapján: {token}")  # Debug üzenet
+    
     # Ha nem találunk profilt, inkább egy értesítést adunk, nem azonnal dobunk kivételt
     if not profile:
         messages.error(request, 'Érvénytelen vagy lejárt megerősítő link.')
         return redirect('login')
-
+    
+    print(f"Token ellenőrzése: {profile.email_token}, Felhasználva: {profile.email_token_used}")
     print(f"Profile found with token: {token}")  # Debug üzenet
+    print("Ellenőrzés elindult") # Debug üzenet
 
     # Ellenőrizzük, hogy a token lejárt-e
-    if profile.email_token_expires  < now():
+    if profile.email_token_expires < now():
+        print("Token lejárt!") # Debug üzenet
         messages.error(request, 'A megerősítő link lejárt. Kérlek kérj újat.')
         return redirect('resend_verification')
+    print(f"megerősítőlink lejárt: {profile.email_token_expires < now()}")  # Debug üzenet
+    
+    # Ellenőrizzük, hogy a token már felhasználásra került-e
+    if profile.email_token_used:
+        if profile.pending_email:  # Ha van függőben lévő email cím, engedjük a módosítást!
+            profile.email_token_used = False  # Visszaállítjuk a token használatát
+            print(f"Token visszaállítása, ha van függő email: {profile.pending_email}")
+        else:
+            messages.error(request, 'Ellenőrző: A megerősítő link már felhasználásra került.')
+            return redirect('login')
+
+    print(f"Token felhasználva: {profile.email_token_used}")  # Debug üzenet
 
     # Első email megerősítés – bejelentkezés nem szükséges
     if not profile.email_verified:
-        profile.email_verified = True
-        profile.email_token = ''  # Token törlése, nem csak üres string
-        profile.save()
-        messages.success(request, 'Sikeresen megerősítetted az email címed. Most már be tudsz jelentkezni.')
+        print (f"Első email megerősítés: {not profile.email_verified}")  # Debug üzenet
+        try:
+            profile.email_verified = True
+            print (f"Email verified: {profile.email_verified}")  # Debug üzenet
+            profile.email_token = None  # Token törlése
+            print (f"Token törölve: {profile.email_token}")  # Debug üzenet
+            profile.email_token_used = True  #Token használatba vétele
+            print (f"Token használatba véve: {profile.email_token_used}")  # Debug üzenet
+            profile.save(update_fields=['email_verified', 'email_token', 'email_token_used'])
+            print (f"Profile mentve: {profile}")  # Debug üzenet
+            
+            messages.success(request, 'Sikeresen megerősítetted az email címed. Most már be tudsz jelentkezni.')
+        except IntegrityError:
+            messages.error(request, 'Első: A megerősítő link már felhasználásra került.')
+            print(f"IntegrityError: {profile.email_token_used}")  # Debug üzenet
+            return redirect('login')
         return redirect('login')
+    print(f"Első email megerősítés: {not profile.email_verified}")  # Debug üzenet
 
     # Másodlagos email cím megerősítése
     if request.user.is_authenticated:
@@ -56,20 +99,43 @@ def verify_email(request, token):
             return redirect('login')
 
         if profile.pending_email:
+            old_email = profile.user.email  # Régi email cím mentése
+            print(f"Belép az email módosítási szakaszba: {profile.pending_email}")
             user = profile.user
             user.email = profile.pending_email
-            user.save()
+            print (f"Email cím megváltoztatva: {profile.pending_email}")  # Debug üzenet
+            user.save(update_fields=['email'])
+            profile.refresh_from_db()  # Biztosítjuk, hogy a változás ténylegesen frissüljön
+            print("Felhasználó email módosítva!")
+            print (f"User mentve: {user}")  # Debug üzenet
+            print (f"Profil mentve: {profile}")  # Debug üzenet
             profile.pending_email = None  # Töröljük a pending_email mezőt
-            profile.email_token = ''  # Token törlése
-            profile.save()
+            profile.email_token = None  # Token törlése
+            profile.email_token_used = True  # Token használatba vétele
+            profile.save(update_fields=['pending_email', 'email_token', 'email_token_used']) # Profil frissítés
+            print (f"Profil mentve: {profile}")  # Debug üzenet
+            # Most küldjük ki az értesítést a régi email címre!
+        try:
+            send_mail(
+                subject='Email cím módosítása',
+                message=f'Kedves {user.username},\n\nA regisztrált email címedet megváltoztatták. Ha nem te végezted ezt a módosítást, kérlek vedd fel velünk a kapcsolatot.',
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[old_email],  # Most már a régi emailre küldjük!
+                fail_silently=False,
+            )
+        except Exception as e:
+            messages.error(request, f'Hiba történt az értesítés küldésekor: {e}')
             messages.success(request, 'Az email címed sikeresen megváltozott.')
             return redirect('profile')
 
-        messages.info(request, 'Ez az email cím már meg van erősítve.')
-        return redirect('profile')
+        messages.info(request, 'Ez az email cím már meg van erősítve. Jelentkezz be.')
+        return redirect('login')
+        
 
     messages.info(request, 'Ez az email cím már meg van erősítve. Jelentkezz be.')
     return redirect('login')
+
+
 
 
 

@@ -11,10 +11,11 @@ class Profile(models.Model):
     profile_picture = models.ImageField(upload_to='profile_pics/', default='profile_pics/default.jpg', blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True)
     updated_at = models.DateTimeField(auto_now=True)  # Automatikus frissítés
-    email_token = models.CharField(max_length=64, unique=True, default=uuid.uuid4, editable=False)
+    email_token = models.CharField(max_length=64, unique=True, default=uuid.uuid4, editable=False, null=True)
     email_token_expires = models.DateTimeField(null=True, blank=True)
     email_verified = models.BooleanField(default=False)
     pending_email = models.EmailField(blank=True, null=True)
+    email_token_used = models.BooleanField(default=False)  # Új mező
 
     def save(self, *args, **kwargs):
         if not self.email_token_expires:
