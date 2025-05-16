@@ -38,9 +38,10 @@
                     <div class="flex h-16 items-center space-x-4">
                         <a href="{% url 'home' %}" class="rounded-md px-3 py-2 text-sm font-medium text-sky-100 hover:bg-sky-600 hover:text-white">Home</a>
                         {% if request.user.is_authenticated %}
-                           <div class="relative group inline-block pb-6">
-                                {% if profile and profile.profile_picture %}
-                                    <div class="flex items-center space-x-2 py-2 px-4 cursor-pointer">
+                           <div class="relative group inline-flex items-center">
+                                {% if profile and profile.profile_picture and profile.profile_picture.url != '/media/profile_pics/default.jpg' %}
+
+                                    <div class="flex flex-col items-center justify-center text-center cursor-pointer">
                                         <img src="{{ profile.profile_picture.url }}" alt="Profilkép"
                                             class="w-8 h-8 rounded-full object-cover border-2 border-white">
                                     </div>
@@ -53,24 +54,25 @@
                                         </svg>
                                     </div>
                                 {% endif %}
-
                                 <!-- A lebegő menü -->
-                                <div class="absolute right-0 mt-2 w-48 bg-sky-700 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 
-                                            opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-200 z-50">
-                                    <div class="py-1 px-2">
-                                        <a href="{% url 'profile' %}"
-                                        class="block px-4 py-2 text-sm text-sky-100 rounded-md hover:bg-sky-600 hover:text-white transition">
-                                        Profile
-                                        </a>
-                                        <form action="{% url 'logout' %}" method="post" class="inline">
-                                            {% csrf_token %}
-                                            <button type="submit"
-                                                    class="block text-left w-full px-4 py-2 text-sm text-sky-100 rounded-md hover:bg-sky-600 hover:text-white transition">
-                                                Logout
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
+    <div class="absolute right-0 top-full w-48 bg-sky-700 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 
+                opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-200 z-50">
+        <div class="py-4 px-6"> <!-- Extra padding, hogy könnyebb legyen kattintani -->
+            <a href="{% url 'profile' %}"
+            class="block px-4 py-2 text-sm text-sky-100 rounded-md hover:bg-sky-600 hover:text-white transition">
+            Profile
+            </a>
+            <form action="{% url 'logout' %}" method="post" class="inline">
+                {% csrf_token %}
+                <button type="submit"
+                        class="block text-left w-full px-4 py-2 text-sm text-sky-100 rounded-md hover:bg-sky-600 hover:text-white transition">
+                    Logout
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
     
 
                             </div>
