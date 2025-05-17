@@ -1,76 +1,93 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- Main Container -->
-<div class="flex flex-col lg:flex-row">
+<div class="flex flex-col md:flex-row min-h-screen">
 
     <!-- Sidebar -->
     <div id="sidebar"
-        class="bg-sky-900 text-white w-full lg:w-64 lg:min-h-screen p-4  
-            flex flex-row lg:flex-col justify-center items-center lg:justify-start lg:items-start h-auto space-x-4 lg:space-x-0 lg:space-y-6">
+     class="bg-sky-900 text-white 
+            w-full md:w-20 lg:w-64 
+            p-4 
+            flex flex-col sm:flex-row md:flex-col 
+            items-center 
+            sm:justify-evenly md:justify-start 
+            space-y-0 sm:space-y-0 md:space-y-6 
+            space-x-0 sm:space-x-4 md:space-x-0 
+            transition-none">
+
 
 
         {% with request.resolver_match.url_name as current_url %}
-        <!-- Wrapper a menüelemeknek -->
-        <div class="flex flex-row lg:flex-col items-center justify-center lg:items-start lg:justify-start w-full space-x-4 lg:space-x-0 lg:space-y-6">
+
+        <div class="w-full flex flex-row sm:justify-evenly md:flex-col md:items-center lg:items-start
+            space-x-4 md:space-x-0 md:space-y-4 lg:space-y-6">
 
 
-
-            <!-- Sidebar Toggle Button (csak nagy képernyőn) -->
+            <!-- Csak nagy képernyőn van toggle -->
             <div class="hidden lg:flex items-center space-x-2">
                 <button onclick="toggleSidebar()" class="flex items-center space-x-2 text-white text-xl">
                     <i class="fas fa-bars"></i>
-                    <span class="sidebar-label hidden lg:inline">Menü</span>
+                    <span class="sidebar-label hidden md:hidden lg:inline">Menü</span>
                 </button>
             </div>
 
             <!-- Menüelemek -->
-            <a href="{% url 'profile' %}" class="w-auto lg:w-full flex items-center space-x-2 p-2 rounded-md transition-all duration-200
-                {% if current_url == 'profile' %}
-                    bg-blue-600 text-white
-                {% else %}
-                    text-white hover:bg-sky-700
-                {% endif %}">
+            <a href="{% url 'profile' %}"
+               class="w-auto md:w-full flex flex-col md:flex-col lg:flex-row items-center 
+                      space-x-0 lg:space-x-2 p-2 rounded-md transition-colors duration-200
+                      {% if current_url == 'profile' %}
+                          bg-blue-600 text-white
+                      {% else %}
+                          text-white hover:bg-sky-700
+                      {% endif %}">
                 <i class="fas fa-user text-xl"></i>
-                <span class="sidebar-label hidden lg:inline">Profil</span>
+                <span class="sidebar-label hidden md:hidden lg:inline">Profil</span>
             </a>
 
-            <a href="{% url 'edit_profile' %}" class="w-auto lg:w-full flex items-center space-x-2 p-2 rounded-md transition-all duration-200
-                {% if current_url == 'edit_profile' %}
-                    bg-blue-600 text-white
-                {% else %}
-                    text-white hover:bg-sky-700
-                {% endif %}">
+            <a href="{% url 'edit_profile' %}"
+               class="w-auto md:w-full flex flex-col md:flex-col lg:flex-row items-center 
+                      space-x-0 lg:space-x-2 p-2 rounded-md transition-colors duration-200
+                      {% if current_url == 'edit_profile' %}
+                          bg-blue-600 text-white
+                      {% else %}
+                          text-white hover:bg-sky-700
+                      {% endif %}">
                 <i class="fas fa-user-edit text-xl"></i>
-                <span class="sidebar-label hidden lg:inline">Profil szerkesztése</span>
+                <span class="sidebar-label hidden md:hidden lg:inline">Profil szerkesztése</span>
             </a>
 
-            <a href="{% url 'password_change' %}" class="w-auto lg:w-full flex items-center space-x-2 p-2 rounded-md transition-all duration-200
-                {% if current_url == 'password_change' %}
-                    bg-blue-600 text-white
-                {% else %}
-                    text-white hover:bg-sky-700
-                {% endif %}">
+            <a href="{% url 'password_change' %}"
+               class="w-auto md:w-full flex flex-col md:flex-col lg:flex-row items-center 
+                      space-x-0 lg:space-x-2 p-2 rounded-md transition-colors duration-200
+                      {% if current_url == 'password_change' %}
+                          bg-blue-600 text-white
+                      {% else %}
+                          text-white hover:bg-sky-700
+                      {% endif %}">
                 <i class="fas fa-key text-xl"></i>
-                <span class="sidebar-label hidden lg:inline">Jelszócsere</span>
+                <span class="sidebar-label hidden md:hidden lg:inline">Jelszócsere</span>
             </a>
 
-            <a href="{% url 'delete_profile' %}" class="w-auto lg:w-full flex items-center space-x-2 p-2 rounded-md transition-all duration-200
-                {% if current_url == 'delete_profile' %}
-                    bg-red-700 text-white
-                {% else %}
-                    text-white hover:bg-red-600
-                {% endif %}">
+            <a href="{% url 'delete_profile' %}"
+               class="w-auto md:w-full flex flex-col md:flex-col lg:flex-row items-center 
+                      space-x-0 lg:space-x-2 p-2 rounded-md transition-colors duration-200
+                      {% if current_url == 'delete_profile' %}
+                          bg-red-700 text-white
+                      {% else %}
+                          text-white hover:bg-red-600
+                      {% endif %}">
                 <i class="fas fa-user-times text-xl"></i>
-                <span class="sidebar-label hidden lg:inline">Profil törlése</span>
+                <span class="sidebar-label hidden md:hidden lg:inline">Profil törlése</span>
             </a>
 
-            <form action="{% url 'logout' %}" method="post" class="w-full">
+            <form action="{% url 'logout' %}" method="post" class="w-auto md:w-full">
                 {% csrf_token %}
                 <button type="submit"
-                    class="w-auto lg:w-full flex items-center space-x-2 p-2 rounded-md transition-all duration-200 text-white hover:bg-gray-700">
+                        class="w-full flex flex-col md:flex-col lg:flex-row items-center 
+                               space-x-0 lg:space-x-2 p-2 rounded-md transition-colors duration-200 
+                               text-white hover:bg-gray-700">
                     <i class="fas fa-sign-out-alt text-xl"></i>
-                    <span class="sidebar-label hidden lg:inline">Kijelentkezés</span>
+                    <span class="sidebar-label hidden md:hidden lg:inline">Kijelentkezés</span>
                 </button>
             </form>
 
@@ -78,45 +95,42 @@
         {% endwith %}
     </div>
 
-    <!-- Main Content -->
-    <div class="w-full lg:w-3/4 p-6 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white">
+    <!-- Fő tartalom -->
+    <div class="w-full p-6 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white">
         <div class="max-w-4xl mx-auto">
             {% block profile_content %}
             {% endblock %}
         </div>
     </div>
-
 </div>
 
-
-<!-- Sidebar toggle script -->
+<!-- Optional: Sidebar toggle script -->
 <script>
-    const sidebar = document.getElementById('sidebar');
-    const labels = sidebar.querySelectorAll('.sidebar-label');
+    let isCollapsed = false;
 
-    function applySidebarState() {
-        const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const labels = sidebar.querySelectorAll('.sidebar-label');
 
-        sidebar.classList.toggle('lg:w-64', !isCollapsed);
-        sidebar.classList.toggle('lg:w-20', isCollapsed);
+        isCollapsed = !isCollapsed;
 
         if (window.innerWidth >= 1024) {
+            sidebar.classList.toggle('lg:w-64', !isCollapsed);
+            sidebar.classList.toggle('lg:w-20', isCollapsed);
+
             labels.forEach(label => {
                 label.classList.toggle('lg:inline', !isCollapsed);
                 label.classList.toggle('hidden', isCollapsed);
             });
+
+            localStorage.setItem('sidebarCollapsed', isCollapsed ? '1' : '0');
         }
     }
 
-    function toggleSidebar() {
-        const isCurrentlyCollapsed = sidebar.classList.contains('lg:w-20');
-        localStorage.setItem('sidebarCollapsed', !isCurrentlyCollapsed);
-        applySidebarState();
-    }
-
-    // Inicializálás betöltéskor
-    document.addEventListener('DOMContentLoaded', applySidebarState);
+    document.addEventListener('DOMContentLoaded', () => {
+        if (window.innerWidth >= 1024 && localStorage.getItem('sidebarCollapsed') === '1') {
+            toggleSidebar();
+        }
+    });
 </script>
-
-
 {% endblock %}
