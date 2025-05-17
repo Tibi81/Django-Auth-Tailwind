@@ -6,11 +6,8 @@
 
     <!-- Sidebar -->
     <div id="sidebar"
-        class="bg-sky-900 text-white w-full lg:w-64 lg:min-h-screen p-4 transition-all duration-300 ease-in-out 
+        class="bg-sky-900 text-white w-full lg:w-64 lg:min-h-screen p-4  
             flex flex-row lg:flex-col justify-center items-center lg:justify-start lg:items-start h-auto space-x-4 lg:space-x-0 lg:space-y-6">
-
-
-
 
 
         {% with request.resolver_match.url_name as current_url %}
@@ -94,19 +91,15 @@
 
 <!-- Sidebar toggle script -->
 <script>
-    let isCollapsed = false;
+    const sidebar = document.getElementById('sidebar');
+    const labels = sidebar.querySelectorAll('.sidebar-label');
 
-    function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        const labels = sidebar.querySelectorAll('.sidebar-label');
+    function applySidebarState() {
+        const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
 
-        isCollapsed = !isCollapsed;
-
-        // Szélesség módosítása
         sidebar.classList.toggle('lg:w-64', !isCollapsed);
         sidebar.classList.toggle('lg:w-20', isCollapsed);
 
-        // Csak asztali nézetben módosítsuk a címkéket
         if (window.innerWidth >= 1024) {
             labels.forEach(label => {
                 label.classList.toggle('lg:inline', !isCollapsed);
@@ -114,6 +107,16 @@
             });
         }
     }
+
+    function toggleSidebar() {
+        const isCurrentlyCollapsed = sidebar.classList.contains('lg:w-20');
+        localStorage.setItem('sidebarCollapsed', !isCurrentlyCollapsed);
+        applySidebarState();
+    }
+
+    // Inicializálás betöltéskor
+    document.addEventListener('DOMContentLoaded', applySidebarState);
 </script>
+
 
 {% endblock %}
