@@ -25,7 +25,7 @@
 
             <!-- Csak nagy képernyőn van toggle -->
             <div class="hidden lg:flex items-center space-x-2">
-                <button onclick="toggleSidebar()" class="flex items-center space-x-2 text-white text-xl">
+                <button onclick="toggleSidebar()" class="flex items-center space-x-2 text-white text-base">
                     <i class="fas fa-bars"></i>
                     <span class="sidebar-label hidden md:hidden lg:inline">Menü</span>
                 </button>
@@ -40,7 +40,7 @@
                       {% else %}
                           text-white hover:bg-sky-700
                       {% endif %}">
-                <i class="fas fa-user text-xl"></i>
+                <i class="fas fa-user text-base"></i>
                 <span class="sidebar-label hidden md:hidden lg:inline">Profil</span>
             </a>
 
@@ -52,7 +52,7 @@
                       {% else %}
                           text-white hover:bg-sky-700
                       {% endif %}">
-                <i class="fas fa-user-edit text-xl"></i>
+                <i class="fas fa-user-edit text-base"></i>
                 <span class="sidebar-label hidden md:hidden lg:inline">Profil szerkesztése</span>
             </a>
 
@@ -64,7 +64,7 @@
                       {% else %}
                           text-white hover:bg-sky-700
                       {% endif %}">
-                <i class="fas fa-key text-xl"></i>
+                <i class="fas fa-key text-base"></i>
                 <span class="sidebar-label hidden md:hidden lg:inline">Jelszócsere</span>
             </a>
 
@@ -76,7 +76,7 @@
                       {% else %}
                           text-white hover:bg-red-600
                       {% endif %}">
-                <i class="fas fa-user-times text-xl"></i>
+                <i class="fas fa-user-times text-base"></i>
                 <span class="sidebar-label hidden md:hidden lg:inline">Profil törlése</span>
             </a>
 
@@ -86,7 +86,7 @@
                         class="w-full flex flex-col md:flex-col lg:flex-row items-center 
                                space-x-0 lg:space-x-2 p-2 rounded-md transition-colors duration-200 
                                text-white hover:bg-gray-700">
-                    <i class="fas fa-sign-out-alt text-xl"></i>
+                    <i class="fas fa-sign-out-alt text-base"></i>
                     <span class="sidebar-label hidden md:hidden lg:inline">Kijelentkezés</span>
                 </button>
             </form>

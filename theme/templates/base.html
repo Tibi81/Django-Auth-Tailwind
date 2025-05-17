@@ -2,12 +2,11 @@
 <html lang="hu">
 
 <head>
-    {% load tailwind_tags %}
-    {% load form_tags %}
+    {% load tailwind_tags form_tags static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Site{% endblock %}</title> 
-    {% load static %}
+    
     <!-- Saját CSS -->
     <link rel="stylesheet" href="{% static 'css/forms.css' %}">
     <!-- Font Awesome ikonok -->
@@ -19,14 +18,14 @@
     
 <body class="flex flex-col min-h-screen bg-sky-100 text-sky-900">
     <nav class="bg-sky-800 shadow">
-        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl px-2 sm:px-6 xl:px-8">
             <div class="relative flex h-16 items-center justify-between">
                 <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                     <div class="flex shrink-0 items-center">
                         <img class="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Logo">
                     </div>
                 </div>
-                <div class="absolute inset-y-0 right-0 flex items-center sm:hidden">
+                <div class="absolute inset-y-0 right-0 flex items-center xl:hidden">
                     <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-sky-200 hover:text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-sky-800 focus:ring-white">
                         <span class="sr-only">Open main menu</span>
                         <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -34,11 +33,11 @@
                         </svg>
                     </button>
                 </div>
-                <div class="hidden sm:block sm:ml-6">
+                <div class="hidden xl:block xl:ml-6">
                     <div class="flex h-16 items-center space-x-4">
                         <a href="{% url 'home' %}" class="rounded-md px-3 py-2 text-sm font-medium text-sky-100 hover:bg-sky-600 hover:text-white">Home</a>
                         {% if request.user.is_authenticated %}
-                           <div class="relative group inline-flex items-center">
+                           <div class="relative group inline-flex items-center hidden xl:flex">
                                 {% if profile and profile.profile_picture and profile.profile_picture.url != '/media/profile_pics/default.jpg' %}
 
                                     <div class="flex flex-col items-center justify-center text-center cursor-pointer">
@@ -55,27 +54,27 @@
                                     </div>
                                 {% endif %}
                                 <!-- A lebegő menü -->
-    <div class="absolute right-0 top-full w-48 bg-sky-700 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 
-                opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-200 z-50">
-        <div class="py-4 px-6"> <!-- Extra padding, hogy könnyebb legyen kattintani -->
-            <a href="{% url 'profile' %}"
-            class="block px-4 py-2 text-sm text-sky-100 rounded-md hover:bg-sky-600 hover:text-white transition">
-            Profile
-            </a>
-            <form action="{% url 'logout' %}" method="post" class="inline">
-                {% csrf_token %}
-                <button type="submit"
-                        class="block text-left w-full px-4 py-2 text-sm text-sky-100 rounded-md hover:bg-sky-600 hover:text-white transition">
-                    Logout
-                </button>
-            </form>
-        </div>
-    </div>
-</div>
+                                <div class="absolute right-0 top-full w-48 bg-sky-700 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 
+                                            opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-200 z-50">
+                                    <div class="py-4 px-6"> <!-- Extra padding, hogy könnyebb legyen kattintani -->
+                                        <a href="{% url 'profile' %}"
+                                        class="block px-4 py-2 text-sm text-sky-100 rounded-md hover:bg-sky-600 hover:text-white transition">
+                                        Profile
+                                        </a>
+                                        <form action="{% url 'logout' %}" method="post" class="inline">
+                                            {% csrf_token %}
+                                            <button type="submit"
+                                                    class="block text-left w-full px-4 py-2 text-sm text-sky-100 rounded-md hover:bg-sky-600 hover:text-white transition">
+                                                Logout
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
 
     
 
-                            </div>
+                            
                         {% else %}
                             <a href="{% url 'register' %}" class="rounded-md px-3 py-2 text-sm font-medium text-sky-100 hover:bg-sky-600 hover:text-white">Register</a>
                             <a href="{% url 'login' %}" class="rounded-md px-3 py-2 text-sm font-medium text-sky-100 hover:bg-sky-600 hover:text-white">Login</a>
@@ -87,26 +86,43 @@
     </nav>
 
     {% if messages %}
-    <div class="mb-6 space-y-4">
-        {% for message in messages %}
-            <div class="p-4 rounded-lg shadow-lg border-l-4 text-sm font-medium flex items-start
-                        {% if message.tags == 'success' %}
-                            bg-green-50 text-green-800 border-green-400
-                        {% elif message.tags == 'error' or message.tags == 'danger' %}
-                            bg-red-50 text-red-800 border-red-400
-                        {% else %}
-                            bg-blue-50 text-blue-800 border-blue-400
-                        {% endif %}">
+<div class="mb-6 space-y-4">
+    {% for message in messages %}
+        <div class="p-4 rounded-lg shadow-lg border-l-4 text-sm font-medium flex items-start
+            {% if message.tags == 'success' %}
+                bg-green-50 text-green-800 border-green-400
+            {% elif message.tags == 'error' or message.tags == 'danger' %}
+                bg-red-50 text-red-800 border-red-400
+            {% else %}
+                bg-blue-50 text-blue-800 border-blue-400
+            {% endif %}">
+            
+            <!-- Ikon választás -->
+            {% if message.tags == 'success' %}
+                <!-- Pipa ikon -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
-                <div>{{ message }}</div>
-            </div>
-        {% endfor %}
-    </div>
-    {% endif %}
+            {% elif message.tags == 'error' or message.tags == 'danger' %}
+                <!-- X ikon -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            {% else %}
+                <!-- Info ikon -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 6a6 6 0 100 12 6 6 0 000-12z" />
+                </svg>
+            {% endif %}
+            
+            <div>{{ message }}</div>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
 
-    <div id="mobile-menu" class="sm:hidden hidden">
+
+    <div id="mobile-menu" class="hidden xl:hidden">
         <div class="px-2 pt-2 pb-3 space-y-1">
             <a href="{% url 'home' %}" class="text-sky-500 block px-3 py-2 rounded-md text-base font-medium hover:bg-sky-700 hover:text-white">Home</a>
             {% if not request.user.is_authenticated %}
@@ -122,10 +138,13 @@
         </div>
     </div>
 
-    <main class="flex-grow p-4">
-        {% block content %}
-        {% endblock %}
+    <main class="flex-grow px-4 py-6 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div class="bg-white rounded-lg shadow p-6">
+            {% block content %}
+            {% endblock %}
+        </div>
     </main>
+
 
     <footer class="bg-sky-700 text-white p-4 text-center">
         <p>&copy; 2025 My Site</p>
@@ -153,6 +172,13 @@
                 console.error("profileButton vagy profileMenu nem található!");
             }
         });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
     </script>
 </body>
 </html>

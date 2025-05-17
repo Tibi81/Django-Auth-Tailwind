@@ -952,6 +952,10 @@ select {
   cursor: pointer;
 }
 
+.resize {
+  resize: both;
+}
+
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
@@ -1252,6 +1256,11 @@ select {
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .pb-3 {
@@ -1591,10 +1600,6 @@ select {
     justify-content: flex-start;
   }
 
-  .sm\:justify-center {
-    justify-content: center;
-  }
-
   .sm\:justify-evenly {
     justify-content: space-evenly;
   }
@@ -1620,6 +1625,14 @@ select {
 @media (min-width: 768px) {
   .md\:col-span-2 {
     grid-column: span 2 / span 2;
+  }
+
+  .md\:ml-6 {
+    margin-left: 1.5rem;
+  }
+
+  .md\:block {
+    display: block;
   }
 
   .md\:hidden {
@@ -1674,12 +1687,24 @@ select {
 }
 
 @media (min-width: 1024px) {
+  .lg\:ml-6 {
+    margin-left: 1.5rem;
+  }
+
+  .lg\:block {
+    display: block;
+  }
+
   .lg\:inline {
     display: inline;
   }
 
   .lg\:flex {
     display: flex;
+  }
+
+  .lg\:hidden {
+    display: none;
   }
 
   .lg\:w-20 {
@@ -1711,6 +1736,29 @@ select {
   }
 
   .lg\:px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl\:ml-6 {
+    margin-left: 1.5rem;
+  }
+
+  .xl\:block {
+    display: block;
+  }
+
+  .xl\:flex {
+    display: flex;
+  }
+
+  .xl\:hidden {
+    display: none;
+  }
+
+  .xl\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
   }
