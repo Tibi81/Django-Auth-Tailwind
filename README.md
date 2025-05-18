@@ -4,7 +4,7 @@
 # 🚧  Fejlesztés alatt
 Ez a projekt már működőképes és használható formában van, azonban jelenleg nincsenek még automatikus tesztek írva hozzá. A közeljövőben a kód strukturálásán, olvashatóságán és teszteléssel való lefedettségén dolgozom a jobb karbantarthatóság és megbízhatóság érdekében.
 
-<table style="width: 100%;">
+<table style="width: 150%;">
   <tr>
     <td style="border: 3px solid #4F46E5; padding: 5px;">
       <img src="https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/Macbook-Air-127.0.0.1.png" width="300"/>
