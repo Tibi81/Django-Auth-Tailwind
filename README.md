@@ -2,12 +2,13 @@
 ### Ez a projekt egy Django alapú autentikációs rendszer, amely Tailwind CSS-t használ a dizájnhoz.
 
 # 🚧  Fejlesztés alatt
-Ez a projekt már majdnem működőképes és használható formában van, azonban jelenleg nincsenek még automatikus tesztek írva hozzá. A közeljövőben a kód strukturálásán, olvashatóságán és teszteléssel való lefedettségén dolgozom a jobb karbantarthatóság és megbízhatóság érdekében.
+Ez a projekt már működőképes és használható formában van, azonban jelenleg nincsenek még automatikus tesztek írva hozzá. A közeljövőben a kód strukturálásán, olvashatóságán és teszteléssel való lefedettségén dolgozom a jobb karbantarthatóság és megbízhatóság érdekében.
 
-![Főoldal képernyőképe](https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/Macbook-Air-127.0.0.1%20(1).png)
+
 ![2.kép](https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/Macbook-Air-127.0.0.1.png)
 ![3.kép](https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/iPad-Air-4-127.0.0.1.png)
 ![4.kép](https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/iPhone-13-PRO-127.0.0.1.png)
+![Főoldal képernyőképe](https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/Macbook-Air-127.0.0.1%20(1).png)
 
 
 
