@@ -6,18 +6,18 @@ Ez a projekt már működőképes és használható formában van, azonban jelen
 
 <table style="width: 150%;">
   <tr>
-    <td style="border: 3px solid #4F46E5; padding: 5px;">
+    <td style="border: 10px solid #4F46E5; padding: 5px;">
       <img src="https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/Macbook-Air-127.0.0.1.png" width="300"/>
     </td>
-    <td style="border: 3px solid #4F46E5; padding: 5px;">
+    <td style="border: 10px solid #4F46E5; padding: 5px;">
       <img src="https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/iPad-Air-4-127.0.0.1.png" width="300"/>
     </td>
   </tr>
   <tr>
-    <td style="border: 3px solid #4F46E5; padding: 5px;">
+    <td style="border: 10px solid #4F46E5; padding: 5px;">
       <img src="https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/iPhone-13-PRO-127.0.0.1.png" width="200"/>
     </td>
-    <td style="border: 3px solid #4F46E5; padding: 5px;">
+    <td style="border: 10px solid #4F46E5; padding: 5px;">
       <img src="https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/Macbook-Air-127.0.0.1%20(1).png" width="300"/>
     </td>
   </tr>
