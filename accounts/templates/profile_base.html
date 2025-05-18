@@ -5,16 +5,17 @@
 
     <!-- Sidebar -->
     <div id="sidebar"
-     class="bg-sky-900 text-white 
-            w-full md:w-20 lg:w-64 
-            p-4 
-            flex flex-col sm:flex-row md:flex-col 
-            items-center 
-            sm:justify-evenly md:justify-start 
-            space-y-0 sm:space-y-0 md:space-y-6 
-            space-x-0 sm:space-x-4 md:space-x-0 
-            transition-none">
-
+     class="
+       bg-sky-900 text-white
+       w-full md:w-20 lg:w-64
+       p-4
+       flex flex-col sm:flex-row md:flex-col
+       items-center
+       sm:justify-evenly md:justify-start
+       space-y-0 sm:space-y-0 md:space-y-6
+       space-x-0 sm:space-x-4 md:space-x-0
+       rounded-t-lg 
+       md:rounded-tl-lg md:rounded-bl-lg md:rounded-tr-none md:rounded-br-none">
 
 
         {% with request.resolver_match.url_name as current_url %}
@@ -24,12 +25,14 @@
 
 
             <!-- Csak nagy képernyőn van toggle -->
-            <div class="hidden lg:flex items-center space-x-2">
-                <button onclick="toggleSidebar()" class="flex items-center space-x-2 text-white text-base">
-                    <i class="fas fa-bars"></i>
+            <a href="javascript:void(0);" onclick="toggleSidebar()"
+                class="w-auto md:w-full flex flex-col md:flex-col lg:flex-row items-center 
+                        space-x-0 lg:space-x-2 p-2 rounded-md transition-colors duration-200
+                        text-white hover:bg-gray-700 hidden lg:flex">
+                    <i class="fas fa-bars text-base w-5 text-center"></i>
                     <span class="sidebar-label hidden md:hidden lg:inline">Menü</span>
-                </button>
-            </div>
+                </a>
+
 
             <!-- Menüelemek -->
             <a href="{% url 'profile' %}"
@@ -40,7 +43,7 @@
                       {% else %}
                           text-white hover:bg-sky-700
                       {% endif %}">
-                <i class="fas fa-user text-base"></i>
+                <i class="fas fa-user text-base w-5 text-center"></i>
                 <span class="sidebar-label hidden md:hidden lg:inline">Profil</span>
             </a>
 
@@ -52,7 +55,7 @@
                       {% else %}
                           text-white hover:bg-sky-700
                       {% endif %}">
-                <i class="fas fa-user-edit text-base"></i>
+                <i class="fas fa-user-edit text-base w-5 text-center"></i>
                 <span class="sidebar-label hidden md:hidden lg:inline">Profil szerkesztése</span>
             </a>
 
@@ -64,7 +67,7 @@
                       {% else %}
                           text-white hover:bg-sky-700
                       {% endif %}">
-                <i class="fas fa-key text-base"></i>
+                <i class="fas fa-key text-base w-5 text-center"></i>
                 <span class="sidebar-label hidden md:hidden lg:inline">Jelszócsere</span>
             </a>
 
@@ -76,7 +79,7 @@
                       {% else %}
                           text-white hover:bg-red-600
                       {% endif %}">
-                <i class="fas fa-user-times text-base"></i>
+                <i class="fas fa-user-times text-base w-5 text-center"></i>
                 <span class="sidebar-label hidden md:hidden lg:inline">Profil törlése</span>
             </a>
 
@@ -86,7 +89,7 @@
                         class="w-full flex flex-col md:flex-col lg:flex-row items-center 
                                space-x-0 lg:space-x-2 p-2 rounded-md transition-colors duration-200 
                                text-white hover:bg-gray-700">
-                    <i class="fas fa-sign-out-alt text-base"></i>
+                    <i class="fas fa-sign-out-alt text-base w-5 text-center"></i>
                     <span class="sidebar-label hidden md:hidden lg:inline">Kijelentkezés</span>
                 </button>
             </form>

@@ -9,27 +9,24 @@
     <form method="post" enctype="multipart/form-data" class="mt-6 space-y-6 bg-white p-6 rounded-lg shadow-lg" id="profile-form">
         {% csrf_token %}
         
-        <!-- Username mező -->
+
+        <!-- Last name mező -->
         <div class="mb-4">
-            <label for="username" class="block text-sm font-medium text-gray-700">Username:</label>
-            <input type="text" name="username" id="username" value="{{ user.username }}" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="Username">
+            <label for="last_name" class="block text-sm font-medium text-gray-700">Vezetéknév:</label>
+            <input type="text" name="last_name" id="last_name" value="{{ profile.user.last_name }}" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="Add meg a vezetékneved!">
         </div>
 
         <!-- First name mező -->
         <div class="mb-4">
-            <label for="first_name" class="block text-sm font-medium text-gray-700">First Name:</label>
-            <input type="text" name="first_name" id="first_name" value="{{ profile.user.first_name }}" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="First Name">
+            <label for="first_name" class="block text-sm font-medium text-gray-700">Keresztnév:</label>
+            <input type="text" name="first_name" id="first_name" value="{{ profile.user.first_name }}" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="Add meg a keresztneved!">
         </div>
 
-        <!-- Last name mező -->
-        <div class="mb-4">
-            <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name:</label>
-            <input type="text" name="last_name" id="last_name" value="{{ profile.user.last_name }}" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="Last Name">
-        </div>
+        
 
         <!-- Profile Picture mező -->
         <div class="mb-4">
-            <label for="profile_picture" class="block text-sm font-medium text-gray-700">Profile Picture:</label>
+            <label for="profile_picture" class="block text-sm font-medium text-gray-700">Profilkép:</label>
             <input type="file" name="profile_picture" id="profile_picture" class="hidden">
             <label for="profile_picture" class="inline-block mt-1 cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-200">
                 Fájl kiválasztása
@@ -38,14 +35,14 @@
 
         <!-- Bio mező -->
         <div class="mb-4">
-            <label for="bio" class="block text-sm font-medium text-gray-700">Bio:</label>
-            <textarea name="bio" id="bio" rows="4" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="Tell us about yourself">{{ profile.bio }}</textarea>
+            <label for="bio" class="block text-sm font-medium text-gray-700">Bemutatkozás:</label>
+            <textarea name="bio" id="bio" rows="4" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="Mesélj magadról!">{{ profile.bio }}</textarea>
         </div>
 
         <!-- Location mező -->
         <div class="mb-4">
-            <label for="location" class="block text-sm font-medium text-gray-700">Location:</label>
-            <input type="text" name="location" id="location" value="{{ profile.location }}" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="Your location">
+            <label for="location" class="block text-sm font-medium text-gray-700">Település:</label>
+            <input type="text" name="location" id="location" value="{{ profile.location }}" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="Add meg hol élsz!">
         </div>
 
         <!-- Birth Date mező -->
@@ -66,8 +63,8 @@
         </div>
         <!-- Phone Number mező -->
         <div class="mb-4">
-            <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone Number:</label>
-            <input type="text" name="phone_number" id="phone_number" value="{{ profile.phone_number }}" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="Phone Number">
+            <label for="phone_number" class="block text-sm font-medium text-gray-700">Telefonszám:</label>
+            <input type="text" name="phone_number" id="phone_number" value="{{ profile.phone_number }}" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="Add meg a telefonszámod!">
         </div>
 
         <button type="submit" class="w-full py-2 mt-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400" id="save-btn">Save Changes</button>

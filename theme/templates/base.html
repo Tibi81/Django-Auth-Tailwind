@@ -33,11 +33,11 @@
                         </svg>
                     </button>
                 </div>
-                <div class="hidden xl:block xl:ml-6">
+                <div class="hidden xl:block high-res:hidden xl:ml-6">
                     <div class="flex h-16 items-center space-x-4">
                         <a href="{% url 'home' %}" class="rounded-md px-3 py-2 text-sm font-medium text-sky-100 hover:bg-sky-600 hover:text-white">Home</a>
                         {% if request.user.is_authenticated %}
-                           <div class="relative group inline-flex items-center hidden xl:flex">
+                           <div class="relative group inline-flex items-center hidden xl:flex high-res:flex">
                                 {% if profile and profile.profile_picture and profile.profile_picture.url != '/media/profile_pics/default.jpg' %}
 
                                     <div class="flex flex-col items-center justify-center text-center cursor-pointer">

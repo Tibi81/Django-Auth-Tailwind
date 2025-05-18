@@ -46,6 +46,9 @@ module.exports = {
     ],
     theme: {
         extend: {
+            screens: {
+                    'high-res': { 'raw': '(-webkit-min-device-pixel-ratio: 2)' },
+            },
             colors:{
                 'primary': '#5B21B6',
                 'secondary': '#9333EA',

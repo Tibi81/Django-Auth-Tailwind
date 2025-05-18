@@ -5,29 +5,30 @@
 {% block profile_content %}
     <div class="profile-container mx-auto p-4 bg-white shadow-md rounded-lg">
         <div class=" grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-ultraViolet p-4 rounded-md md:col-span-2 ">
-                <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="w-24 h-24 rounded-full">
-                <h2 class="text-xl font-bold">
+            <div class="bg-ultraViolet p-4 rounded-md md:col-span-2 flex items-center space-x-4">
+            <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="w-24 h-24 rounded-full">
+            <h2 class="text-xl">
                 {% if profile.user.first_name %}
                     {{ profile.user.first_name }} {{ profile.user.last_name }}
                 {% else %}
                     {{ profile.user.username }}
                 {% endif %}
-                </h2>
-            </div>
+            </h2>
+        </div>
+
             
-            <div class="bg-glaucous p-4 rounded-md">
-                <p class="text-white">Location: {{ profile.location }}</p>
-                <p class="text-gray-600">Birth Date: {{ profile.birth_date|date:"Y F j" }}</p>
-                <p class="text-gray-600">Joined: {{ profile.user.date_joined|date:"Y F j" }}</p>
-                <p class="text-gray-600">Last Updated: {{ profile.updated_at|date:"Y F j" }}</p>
+            <div class="bg-glaucous p-4 rounded-md">                
+                <p class="text-gray-600">Születési dátum: {{ profile.birth_date|date:"Y F j" }}</p>
+                <p class="text-gray-600">Regisztráció ideje: {{ profile.user.date_joined|date:"Y F j" }}</p>
+                <p class="text-gray-600">Utoljára frissítve: {{ profile.updated_at|date:"Y F j" }}</p>
             </div>
             <div class="bg-nonphotoBlue p-4 rounded-md">
+                <p class="text-gray-600">Lakhely: {{ profile.location }}</p>
                 <p class="text-gray-600">Email: {{ user.email }}</p>
-                <p class="text-gray-600">Phone Number: {{ profile.phone_number }}</p>
+                <p class="text-gray-600">Telefonszám: {{ profile.phone_number }}</p>
             </div>
             <div class="bg-mintGreen p-4 rounded-md md:col-span-2">
-                <p class="text-gray-600">Bio: {{ profile.bio }}</p>
+                <p class="text-gray-600">Bemutatkozás: {{ profile.bio }}</p>
             </div>            
         </div>
     </div>

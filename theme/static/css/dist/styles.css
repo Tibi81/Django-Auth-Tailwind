@@ -900,6 +900,10 @@ select {
   width: 12rem;
 }
 
+.w-5 {
+  width: 1.25rem;
+}
+
 .w-6 {
   width: 1.5rem;
 }
@@ -1050,6 +1054,11 @@ select {
 
 .rounded-xl {
   border-radius: 0.75rem;
+}
+
+.rounded-t-lg {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
 }
 
 .border {
@@ -1253,14 +1262,14 @@ select {
   padding-bottom: 1rem;
 }
 
-.py-8 {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+}
+
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 .pb-3 {
@@ -1458,10 +1467,6 @@ select {
   transition-duration: 150ms;
 }
 
-.transition-none {
-  transition-property: none;
-}
-
 .duration-200 {
   transition-duration: 200ms;
 }
@@ -1576,18 +1581,6 @@ select {
 }
 
 @media (min-width: 640px) {
-  .sm\:ml-6 {
-    margin-left: 1.5rem;
-  }
-
-  .sm\:block {
-    display: block;
-  }
-
-  .sm\:hidden {
-    display: none;
-  }
-
   .sm\:flex-row {
     flex-direction: row;
   }
@@ -1625,14 +1618,6 @@ select {
 @media (min-width: 768px) {
   .md\:col-span-2 {
     grid-column: span 2 / span 2;
-  }
-
-  .md\:ml-6 {
-    margin-left: 1.5rem;
-  }
-
-  .md\:block {
-    display: block;
   }
 
   .md\:hidden {
@@ -1684,27 +1669,31 @@ select {
     margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
     margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
   }
+
+  .md\:rounded-bl-lg {
+    border-bottom-left-radius: 0.5rem;
+  }
+
+  .md\:rounded-br-none {
+    border-bottom-right-radius: 0px;
+  }
+
+  .md\:rounded-tl-lg {
+    border-top-left-radius: 0.5rem;
+  }
+
+  .md\:rounded-tr-none {
+    border-top-right-radius: 0px;
+  }
 }
 
 @media (min-width: 1024px) {
-  .lg\:ml-6 {
-    margin-left: 1.5rem;
-  }
-
-  .lg\:block {
-    display: block;
-  }
-
   .lg\:inline {
     display: inline;
   }
 
   .lg\:flex {
     display: flex;
-  }
-
-  .lg\:hidden {
-    display: none;
   }
 
   .lg\:w-20 {
@@ -1761,6 +1750,16 @@ select {
   .xl\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2) {
+  .high-res\:flex {
+    display: flex;
+  }
+
+  .high-res\:hidden {
+    display: none;
   }
 }
 
