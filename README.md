@@ -4,11 +4,17 @@
 # 🚧  Fejlesztés alatt
 Ez a projekt már működőképes és használható formában van, azonban jelenleg nincsenek még automatikus tesztek írva hozzá. A közeljövőben a kód strukturálásán, olvashatóságán és teszteléssel való lefedettségén dolgozom a jobb karbantarthatóság és megbízhatóság érdekében.
 
+<table>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/Macbook-Air-127.0.0.1.png" width="300"/></td>
+    <td><img src="https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/iPad-Air-4-127.0.0.1.png" width="300"/></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/iPhone-13-PRO-127.0.0.1.png" width="200"/></td>
+    <td><img src="https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/Macbook-Air-127.0.0.1%20(1).png" width="300"/></td>
+  </tr>
+</table>
 
-![2.kép](https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/Macbook-Air-127.0.0.1.png)
-![3.kép](https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/iPad-Air-4-127.0.0.1.png)
-![4.kép](https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/iPhone-13-PRO-127.0.0.1.png)
-![Főoldal képernyőképe](https://raw.githubusercontent.com/Tibi81/Django_Auth-Tailwind/refs/heads/main/Macbook-Air-127.0.0.1%20(1).png)
 
 
 
