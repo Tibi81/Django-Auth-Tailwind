@@ -85,41 +85,44 @@
         </div>
     </nav>
 
-    {% if messages %}
+ {% if messages %}
 <div class="mb-6 space-y-4">
     {% for message in messages %}
-        <div class="p-4 rounded-lg shadow-lg border-l-4 text-sm font-medium flex items-start
+        <div class="p-4 rounded-lg shadow-lg border-l-4 text-sm font-medium flex items-start justify-between relative
             {% if message.tags == 'success' %}
                 bg-green-50 text-green-800 border-green-400
             {% elif message.tags == 'error' or message.tags == 'danger' %}
                 bg-red-50 text-red-800 border-red-400
             {% else %}
                 bg-blue-50 text-blue-800 border-blue-400
-            {% endif %}">
+            {% endif %}" data-dismissible>
             
-            <!-- Ikon választás -->
-            {% if message.tags == 'success' %}
-                <!-- Pipa ikon -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
-            {% elif message.tags == 'error' or message.tags == 'danger' %}
-                <!-- X ikon -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            {% else %}
-                <!-- Info ikon -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 6a6 6 0 100 12 6 6 0 000-12z" />
-                </svg>
-            {% endif %}
-            
-            <div>{{ message }}</div>
+            <div class="flex items-start">
+                {% if message.tags == 'success' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                {% elif message.tags == 'error' or message.tags == 'danger' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mt-1 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 6a6 6 0 100 12 6 6 0 000-12z" />
+                    </svg>
+                {% endif %}
+                <div>{{ message }}</div>
+            </div>
+
+            <!-- Bezáró gomb -->
+            <button type="button" class="absolute top-2 right-2 text-xl leading-none text-gray-500 hover:text-black" onclick="this.parentElement.remove()">
+                &times;
+            </button>
         </div>
     {% endfor %}
 </div>
 {% endif %}
+
 
 
     <div id="mobile-menu" class="hidden xl:hidden">

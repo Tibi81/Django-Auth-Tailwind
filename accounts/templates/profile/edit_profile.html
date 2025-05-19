@@ -36,7 +36,15 @@
         <!-- Bio mező -->
         <div class="mb-4">
             <label for="bio" class="block text-sm font-medium text-gray-700">Bemutatkozás:</label>
-            <textarea name="bio" id="bio" rows="4" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" placeholder="Mesélj magadról!">{{ profile.bio }}</textarea>
+            <textarea 
+                name="bio" 
+                id="bio" 
+                rows="4" 
+                maxlength="500"
+                oninput="updateCounter()"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md" 
+                placeholder="Mesélj magadról!">{{ profile.bio }}</textarea>
+            <p id="counter" class="text-sm text-gray-500 mt-1">0 / 500</p>
         </div>
 
         <!-- Location mező -->
@@ -70,6 +78,17 @@
         <button type="submit" class="w-full py-2 mt-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400" id="save-btn">Save Changes</button>
     </form>
 </div>
+
+<script>
+function updateCounter() {
+    const bio = document.getElementById('bio');
+    const counter = document.getElementById('counter');
+    counter.textContent = `Karakterszám: ${bio.value.length} / 500`;
+}
+
+// Frissítés betöltéskor is (ha már van érték)
+document.addEventListener("DOMContentLoaded", updateCounter);
+</script>
 
   
 {% endblock %}

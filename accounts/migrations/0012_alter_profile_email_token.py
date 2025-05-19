@@ -7,13 +7,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('accounts', '0010_profile_email_token_used'),
+        ('accounts', '0011_alter_profile_email_token'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='profile',
             name='email_token',
-            field=models.CharField(default=accounts.models.generate_uuid_str, editable=False, max_length=100, null=True, unique=True),
+            field=models.CharField(default=accounts.models.generate_uuid_str, editable=False, max_length=64, null=True, unique=True),
         ),
     ]
