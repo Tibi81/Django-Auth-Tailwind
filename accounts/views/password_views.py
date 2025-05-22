@@ -4,15 +4,15 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.views import PasswordChangeDoneView
 from django.contrib.auth import logout
 from accounts.models import Profile # Ha a Profile model itt van
+
 
 class CustomPasswordChangeView(PasswordChangeView):
     
     template_name = 'password/password_change.html'
     success_url = reverse_lazy('password_change_done')  # Ez a jelszóváltás után történő átirányítás helye
-
-from django.contrib.auth.views import PasswordChangeDoneView
 
 class CustomPasswordChangeDoneView(PasswordChangeDoneView):
     template_name = 'password_change_done.html'
