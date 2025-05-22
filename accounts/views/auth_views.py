@@ -44,8 +44,6 @@ def register(request):
         form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
-
-
 def user_login(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -59,11 +57,8 @@ def user_login(request):
                     return redirect('resend_verification')
 
                 messages.error(request, 'Előbb kérlek erősítsd meg az email címedet, mielőtt megpróbálsz bejelentkezni.')                
-                return redirect('resend_verification')
-
-            
-            
-
+                return redirect('resend_verification')           
+            # Ha a felhasználó létezik és az email cím megerősítve van
             login(request, user)
 
             # Ellenőrizzük, van-e függő email token a session-ben

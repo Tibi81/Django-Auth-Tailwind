@@ -55,9 +55,7 @@ class ProfileModelTest(TestCase):
         self.assertIsNotNone(profile.email_token_expires)
         expected_expiry = now() + timedelta(hours=24)
         actual_expiry = profile.email_token_expires
-        self.assertAlmostEqual(actual_expiry, expected_expiry, delta=timedelta(seconds=5))
-
-        
+        self.assertAlmostEqual(actual_expiry, expected_expiry, delta=timedelta(seconds=5))        
 
     def test_email_verified_default(self):
         self.assertFalse(self.profile.email_verified)

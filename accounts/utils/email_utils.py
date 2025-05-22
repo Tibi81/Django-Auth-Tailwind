@@ -41,24 +41,17 @@ from django.db import IntegrityError
 def verify_email(request, token):
     
     
-    profile = Profile.objects.filter(email_token=token).first()
-    print (f"Profile keresése token alapján: {token}")  # Debug üzenet
-    
+    profile = Profile.objects.filter(email_token=token).first()    
     # Ha nem találunk profilt, inkább egy értesítést adunk, nem azonnal dobunk kivételt
     if not profile:
         messages.error(request, 'Érvénytelen vagy lejárt megerősítő link.')
         return redirect('login')
-    
-    print(f"Token ellenőrzése: {profile.email_token}, Felhasználva: {profile.email_token_used}")
-    print(f"Profile found with token: {token}")  # Debug üzenet
-    print("Ellenőrzés elindult") # Debug üzenet
 
     # Ellenőrizzük, hogy a token lejárt-e
     if profile.email_token_expires < now():
-        print("Token lejárt!") # Debug üzenet
         messages.error(request, 'A megerősítő link lejárt. Kérlek kérj újat.')
         return redirect('resend_verification')
-    print(f"megerősítőlink lejárt: {profile.email_token_expires < now()}")  # Debug üzenet
+    
     
     # Ellenőrizzük, hogy a token már felhasználásra került-e
     if profile.email_token_used:
@@ -69,20 +62,13 @@ def verify_email(request, token):
             messages.error(request, 'Ellenőrző: A megerősítő link már felhasználásra került.')
             return redirect('login')
 
-    print(f"Token felhasználva: {profile.email_token_used}")  # Debug üzenet
-
     # Első email megerősítés – bejelentkezés nem szükséges
     if not profile.email_verified:
-        print (f"Első email megerősítés: {not profile.email_verified}")  # Debug üzenet
         try:
             profile.email_verified = True
-            print (f"Email verified: {profile.email_verified}")  # Debug üzenet
             profile.email_token = None  # Token törlése
-            print (f"Token törölve: {profile.email_token}")  # Debug üzenet
             profile.email_token_used = True  #Token használatba vétele
-            print (f"Token használatba véve: {profile.email_token_used}")  # Debug üzenet
             profile.save(update_fields=['email_verified', 'email_token', 'email_token_used'])
-            print (f"Profile mentve: {profile}")  # Debug üzenet
             
             messages.success(request, 'Sikeresen megerősítetted az email címed. Most már be tudsz jelentkezni.')
         except IntegrityError:
@@ -106,14 +92,10 @@ def verify_email(request, token):
             print (f"Email cím megváltoztatva: {profile.pending_email}")  # Debug üzenet
             user.save(update_fields=['email'])
             profile.refresh_from_db()  # Biztosítjuk, hogy a változás ténylegesen frissüljön
-            print("Felhasználó email módosítva!")
-            print (f"User mentve: {user}")  # Debug üzenet
-            print (f"Profil mentve: {profile}")  # Debug üzenet
             profile.pending_email = None  # Töröljük a pending_email mezőt
             profile.email_token = None  # Token törlése
             profile.email_token_used = True  # Token használatba vétele
             profile.save(update_fields=['pending_email', 'email_token', 'email_token_used']) # Profil frissítés
-            print (f"Profil mentve: {profile}")  # Debug üzenet
             # Most küldjük ki az értesítést a régi email címre!
         try:
             send_mail(
@@ -134,9 +116,6 @@ def verify_email(request, token):
 
     messages.info(request, 'Ez az email cím már meg van erősítve. Jelentkezz be.')
     return redirect('login')
-
-
-
 
 
 def resend_verification_email(request):
