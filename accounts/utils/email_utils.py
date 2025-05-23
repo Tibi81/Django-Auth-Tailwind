@@ -100,7 +100,7 @@ def verify_email(request, token):
         try:
             send_mail(
                 subject='Email cím módosítása',
-                message=f'Kedves {user.username},\n\nA regisztrált email címedet megváltoztatták. Ha nem te végezted ezt a módosítást, kérlek vedd fel velünk a kapcsolatot.',
+                message=f'Kedves {user.username},\n\nA regisztrált email címedet megváltoztatták. A megadott új email címed: {user.email}\n\n Ha nem te végezted ezt a módosítást, kérlek vedd fel velünk a kapcsolatot.',
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[old_email],  # Most már a régi emailre küldjük!
                 fail_silently=False,
