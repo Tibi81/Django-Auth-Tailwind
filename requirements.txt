@@ -7,6 +7,7 @@ charset-normalizer==3.4.1
 click==8.1.8
 colorama==0.4.6
 cookiecutter==2.6.0
+coverage==7.8.2
 Django==5.1.7
 django-allauth==65.7.0
 django-browser-reload==1.18.0
@@ -24,6 +25,7 @@ pillow==11.1.0
 pluggy==1.5.0
 Pygments==2.19.1
 pytest==8.3.5
+pytest-cov==6.1.1
 pytest-django==4.11.1
 pytest-mock==3.14.0
 python-dateutil==2.9.0.post0

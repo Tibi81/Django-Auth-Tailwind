@@ -10,6 +10,7 @@ from django.utils.timezone import now
 from .token_utils import generate_email_token
 from datetime import timedelta
 
+
 def send_verification_email(user, new_email):
     token  = generate_email_token()
     user.profile.email_token = token
@@ -38,8 +39,7 @@ from django.shortcuts import redirect
 from accounts.models import Profile
 from django.db import IntegrityError
 
-def verify_email(request, token):
-    
+def verify_email(request, token):    
     
     profile = Profile.objects.filter(email_token=token).first()    
     # Ha nem találunk profilt, inkább egy értesítést adunk, nem azonnal dobunk kivételt
@@ -53,14 +53,36 @@ def verify_email(request, token):
         return redirect('resend_verification')
     
     
-    # Ellenőrizzük, hogy a token már felhasználásra került-e
-    if profile.email_token_used:
-        if profile.pending_email:  # Ha van függőben lévő email cím, engedjük a módosítást!
-            profile.email_token_used = False  # Visszaállítjuk a token használatát
-            print(f"Token visszaállítása, ha van függő email: {profile.pending_email}")
-        else:
-            messages.error(request, 'Ellenőrző: A megerősítő link már felhasználásra került.')
-            return redirect('login')
+    # Token még nem volt használva és van függőben lévő email => módosíthatunk
+    if not profile.email_token_used and profile.pending_email:
+        user = profile.user
+        old_email = user.email
+
+        print(f"Régi email: {old_email}")
+        print(f"Új (pending) email: {profile.pending_email}")
+
+        user.email = profile.pending_email
+        user.save(update_fields=['email'])  # Ezzel csak az email mezőt mentjük
+        
+        profile.pending_email = None
+        profile.email_token_used = True
+        profile.email_token = None
+        profile.save(update_fields=['pending_email', 'email_token_used', 'email_token'])
+
+        messages.success(request, 'Az email címed sikeresen megváltozott.')
+
+        # Értesítés a régi email címre
+        try:
+            send_mail(
+                subject='Email cím módosítása',
+                message=f'Kedves {user.username},\n\nA regisztrált email címedet megváltoztatták. Az új email címed: {user.email}\n\nHa nem te voltál, kérlek jelezd.',
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[old_email],
+                fail_silently=False,
+            )
+        except Exception as e:
+            messages.warning(request, f'Hiba történt az értesítés küldésekor: {e}')
+
 
     # Első email megerősítés – bejelentkezés nem szükséges
     if not profile.email_verified:

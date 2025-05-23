@@ -56,3 +56,11 @@ class PasswordChangeViewTests(TestCase):
         login_success = self.client.login(username='tesztuser', password='newstrongpassword123')
         self.assertTrue(login_success)
 
+    
+
+
+    
+
+
+
+

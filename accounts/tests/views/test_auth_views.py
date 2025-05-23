@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from accounts.models import Profile
 from datetime import timedelta
+from django.contrib.messages import get_messages
 
 class AuthViewTests(TestCase):
 
@@ -93,3 +94,29 @@ class AuthViewTests(TestCase):
         self.assertRedirects(response, reverse('resend_verification'))
         user.refresh_from_db()
         self.assertFalse(user.profile.email_verified)
+
+    def test_invalid_email_login(self):
+        """Hibás email ne engedje bejelentkezni a felhasználót"""
+        response = self.client.post("/login/", {"username": "wronguser", "password": "Test123!"})
+        self.assertEqual(response.status_code, 200)  # Marad a bejelentkező oldalon
+        self.assertContains(response, "Helytelen felhasználónév vagy jelszó")
+
+    
+
+    def test_expired_verification_token(self):
+        user = self.create_user_with_profile('tesztuser', 'teszt@example.com', 'Teszt1234')
+        profile = user.profile
+        profile.email_token = 'expired_token'
+        profile.email_token_expires = timezone.now() - timedelta(hours=1)  # lejárt
+        profile.email_verified = False
+        profile.save()
+
+        response = self.client.get(reverse('verify_email', args=['expired_token']))
+        # Ellenőrizzük, hogy átirányítás történt
+        self.assertRedirects(response, reverse('resend_verification'))
+
+        # Ellenőrizzük, hogy a messages tartalmazza a megfelelő üzenetet
+        messages = list(get_messages(response.wsgi_request))
+        messages_texts = [str(message) for message in messages]
+        self.assertIn('A megerősítő link lejárt. Kérlek kérj újat.', messages_texts)
+
