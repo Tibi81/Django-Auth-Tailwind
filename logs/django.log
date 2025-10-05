@@ -1,0 +1,48 @@
+INFO 2025-10-05 16:13:14,257 forms 6464 2108 Email changed to: test@example.com, pending verification.
+INFO 2025-10-05 16:13:27,673 email_utils 6464 2108 Régi email: oldemail@example.com
+INFO 2025-10-05 16:13:27,673 email_utils 6464 2108 Új (pending) email: newemail@example.com
+INFO 2025-10-05 16:13:27,705 email_utils 6464 2108 Email notification sent to old address: oldemail@example.com
+INFO 2025-10-05 16:13:31,698 email_utils 6464 2108 Token generálva: c160ec35fad6ab8a0a703ed16ef768d25810c23fb7e252ba13cdc56795d86f33
+INFO 2025-10-05 16:13:31,698 email_utils 6464 2108 Új email cím: invalid-email
+INFO 2025-10-05 16:13:31,698 email_utils 6464 2108 Verification email sent to: invalid-email
+INFO 2025-10-05 16:13:32,678 email_utils 6464 2108 Token generálva: 63588c92ffd46896d02e5a923d772ea3a5b672f6f9398dcf7daf13173e5e36e3
+INFO 2025-10-05 16:13:32,680 email_utils 6464 2108 Új email cím: new_email@example.com
+INFO 2025-10-05 16:13:32,681 email_utils 6464 2108 Verification email sent to: new_email@example.com
+INFO 2025-10-05 16:13:39,565 email_utils 6464 2108 Belép az email módosítási szakaszba: pending@example.com
+INFO 2025-10-05 16:13:39,566 email_utils 6464 2108 Email cím megváltoztatva: pending@example.com
+INFO 2025-10-05 16:13:39,567 email_utils 6464 2108 Email notification sent to old address: test2@example.com
+INFO 2025-10-05 16:13:40,530 email_utils 6464 2108 Régi email: oldemail@example.com
+INFO 2025-10-05 16:13:40,530 email_utils 6464 2108 Új (pending) email: newemail@example.com
+INFO 2025-10-05 16:13:40,531 email_utils 6464 2108 Email notification sent to old address: oldemail@example.com
+INFO 2025-10-05 16:14:26,281 forms 8788 14112 Email changed to: test@example.com, pending verification.
+INFO 2025-10-05 16:14:39,377 email_utils 8788 14112 Régi email: oldemail@example.com
+INFO 2025-10-05 16:14:39,377 email_utils 8788 14112 Új (pending) email: newemail@example.com
+INFO 2025-10-05 16:14:39,398 email_utils 8788 14112 Email notification sent to old address: oldemail@example.com
+INFO 2025-10-05 16:14:43,323 email_utils 8788 14112 Token generálva: 3d61516203362dec6d1b6c9145ed3d77a31889182751378230aaa63d1e3a76fe
+INFO 2025-10-05 16:14:43,324 email_utils 8788 14112 Új email cím: invalid-email
+INFO 2025-10-05 16:14:43,326 email_utils 8788 14112 Verification email sent to: invalid-email
+INFO 2025-10-05 16:14:44,400 email_utils 8788 14112 Token generálva: c347532b2b8487f08f45a0514cfd0506795e4fe04f420e8c22c60468fc15f51c
+INFO 2025-10-05 16:14:44,400 email_utils 8788 14112 Új email cím: new_email@example.com
+INFO 2025-10-05 16:14:44,401 email_utils 8788 14112 Verification email sent to: new_email@example.com
+INFO 2025-10-05 16:14:52,036 email_utils 8788 14112 Belép az email módosítási szakaszba: pending@example.com
+INFO 2025-10-05 16:14:52,036 email_utils 8788 14112 Email cím megváltoztatva: pending@example.com
+INFO 2025-10-05 16:14:52,041 email_utils 8788 14112 Email notification sent to old address: test2@example.com
+INFO 2025-10-05 16:14:53,212 email_utils 8788 14112 Régi email: oldemail@example.com
+INFO 2025-10-05 16:14:53,212 email_utils 8788 14112 Új (pending) email: newemail@example.com
+INFO 2025-10-05 16:14:53,214 email_utils 8788 14112 Email notification sent to old address: oldemail@example.com
+INFO 2025-10-05 16:15:37,389 forms 7904 23484 Email changed to: test@example.com, pending verification.
+INFO 2025-10-05 16:15:50,499 email_utils 7904 23484 Régi email: oldemail@example.com
+INFO 2025-10-05 16:15:50,499 email_utils 7904 23484 Új (pending) email: newemail@example.com
+INFO 2025-10-05 16:15:50,518 email_utils 7904 23484 Email notification sent to old address: oldemail@example.com
+INFO 2025-10-05 16:15:54,676 email_utils 7904 23484 Token generálva: 67eb2e71b704254beee0289fe95e5f7e4b09d3af21fcf5cc75ae0513021d59fc
+INFO 2025-10-05 16:15:54,676 email_utils 7904 23484 Új email cím: invalid-email
+INFO 2025-10-05 16:15:54,677 email_utils 7904 23484 Verification email sent to: invalid-email
+INFO 2025-10-05 16:15:55,662 email_utils 7904 23484 Token generálva: a27f327258b2921b402461bcbb1b05768dc528bf6967a88d02a5d23033608c0e
+INFO 2025-10-05 16:15:55,662 email_utils 7904 23484 Új email cím: new_email@example.com
+INFO 2025-10-05 16:15:55,663 email_utils 7904 23484 Verification email sent to: new_email@example.com
+INFO 2025-10-05 16:16:02,509 email_utils 7904 23484 Belép az email módosítási szakaszba: pending@example.com
+INFO 2025-10-05 16:16:02,509 email_utils 7904 23484 Email cím megváltoztatva: pending@example.com
+INFO 2025-10-05 16:16:02,511 email_utils 7904 23484 Email notification sent to old address: test2@example.com
+INFO 2025-10-05 16:16:03,493 email_utils 7904 23484 Régi email: oldemail@example.com
+INFO 2025-10-05 16:16:03,493 email_utils 7904 23484 Új (pending) email: newemail@example.com
+INFO 2025-10-05 16:16:03,494 email_utils 7904 23484 Email notification sent to old address: oldemail@example.com

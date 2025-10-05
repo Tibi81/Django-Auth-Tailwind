@@ -94,14 +94,14 @@ class ProfileForm(forms.ModelForm):
             profile.email_verified = False  # Visszaállítjuk az email_verified mezőt
             if not profile.email_token:
                 profile.email_token = generate_email_token()  # Új token generálása
-            logger.info(f"Email changed to: {profile.pending_email}, pending verification.")  # Debug üzenet
+            logger.info(f"Email changed to: {profile.pending_email}, pending verification.")
 
         if commit:
             try:
                 user.save()
                 profile.save()
             except Exception as e:
-                logger.info(f"Hiba történt a mentés során: {e}") # Debug üzenet
+                logger.error(f"Hiba történt a mentés során: {e}")
                 raise forms.ValidationError("Nem sikerült frissíteni a profilt. Próbáld újra később.")
 
         return profile

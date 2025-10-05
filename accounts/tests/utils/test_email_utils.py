@@ -163,7 +163,7 @@ class EmailVerificationTestCase(TestCase):
         self.profile.email_verified = False
         self.profile.save()
 
-        response = self.client.post(reverse('resend_verification_email'), data={'email': self.user.email})
+        response = self.client.post(reverse('resend_verification'), data={'email': self.user.email})
         self.assertEqual(response.status_code, 302)
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn("Email cím megerősítése", mail.outbox[0].subject)
@@ -172,11 +172,11 @@ class EmailVerificationTestCase(TestCase):
     
         self.profile.email_verified = True
         self.profile.save()
-        response = self.client.post(reverse('resend_verification_email'), data={'email': self.user.email})
+        response = self.client.post(reverse('resend_verification'), data={'email': self.user.email})
         messages_list = list(get_messages(response.wsgi_request))
         self.assertTrue(any("Ez az email cím már meg van erősítve." in str(m) for m in messages_list))
 
     def test_resend_verification_email_post_no_user(self):
-        response = self.client.post(reverse('resend_verification_email'), data={'email': 'nonexistent@example.com'})
+        response = self.client.post(reverse('resend_verification'), data={'email': 'nonexistent@example.com'})
         messages_list = list(get_messages(response.wsgi_request))
         self.assertTrue(any("Ehhez az email címhez nem tartozik regisztrált fiók." in str(m) for m in messages_list))

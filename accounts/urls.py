@@ -38,7 +38,6 @@ urlpatterns = [
     # Email verification URLs
     path('verify-email/<str:token>/', verify_email, name='verify_email'),
     path('send-verification-email/', send_verification_email, name='send_verification_email'),
-    path('resend-verification-email/', resend_verification_email, name='resend_verification_email'),
     path('resend-verification/', resend_verification_email, name='resend_verification'),
     
     
